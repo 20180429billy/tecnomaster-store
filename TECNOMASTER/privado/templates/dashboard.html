@@ -1,0 +1,323 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dash.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+</head>
+
+<body> 
+    <div class="container">
+        <!-- Menu desplegable de la parte izquieda del sitio privado -->
+        <aside>
+            <!-- Parte superior del aside donde se encuentra el logo y un boton para cerrar el formulario que es active cuando esta en mobile -->
+            <div class="top">
+                <div class="logo">
+                    <img src="{% static 'imagenes/logo_tecnomaster.png' %}" alt="">
+                    <h2>TECNO<span class="danger">MASTER</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+            <!-- Parte () o inferior del aside, donde se encuentran todos los link y botontes de navegacion de sitio privado -->
+            <div class="sidebar">
+                <a href="{% url 'dashboard' %}" class="active">
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{% url 'usuarios' %}">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Usuarios</h3>
+                </a>
+                <a href="{% url 'productos' %}">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Productos</h3>
+                </a>
+                <a href="{% url 'categorias' %}">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Categorias</h3>
+                </a>
+                <a href="{% url 'marcas' %}">
+                    <span class="material-icons-sharp">mail_outline</span>
+                    <h3>Marcas</h3>
+                    <span class="message-count">26</span>
+                </a>
+                <a href="{% url 'valoraciones' %}">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Valoraciones</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Ajustes</h3>
+                </a>
+                <a href="{% url 'productos' %}">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Agregar producto</h3>
+                </a>
+                <a href="{% url 'index' %}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Cerrar sesion</h3>
+                </a>
+            </div>
+        </aside>
+
+ 
+        <!-- Seccion principal del sitio privado, donde se encuentrar todas las funciones, estadisticas y resumenes de todas la infomacion del DASHBOARD -->
+        <main class="main-dashboard">
+            <h1>Dashboard</h1>
+
+
+            <!-- Input donde se puede colocar la fecha para ver las estadisticas de ese dia en el dashboard -->
+            <div class="date">
+                <input type="date">
+            </div>
+
+            <!-- Seccion de paneles o cartas donde se pueden visulizar de forma rapida las ventas, ganancias y gatos que ha tendo la empresa en las ultimas 24 horas -->
+            <div class="insights">
+                <div class="sales">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Ventas</h3>
+                            <h1>928</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Ultimas 24 horas</small>
+                </div>
+                <!-- END -->
+                <div class="expenses">
+                    <span class="material-icons-sharp">bar_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Gastos</h3>
+                            <h1>$1,325</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p>62%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Ultimas 24 horas</small>
+                </div>
+                <!-- END -->
+                <div class="income">
+                    <span class="material-icons-sharp">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Ganancias</h3>
+                            <h1>$8,325</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p>44%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Ultimas 24 horas</small>
+                </div>
+                <!-- END -->
+
+
+            </div>
+
+            <!-- Seccion con una tabla donde se puede observar las ultimas compras se han sido realizada en la empresa (en linea) y ver su estado -->
+            <div class="recent-orders">
+                <h2>Ultimas compras</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Marca</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Laptop gamer</td>
+                            <td>$500</td>
+                            <td>Logitech</td>
+                            <td class="warning">pendiente</td>
+                            <td class="primary">Detalles</td>
+                        </tr>
+                        <tr>
+                            <td>Laptop gamer</td>
+                            <td>$500</td>
+                            <td>Logitech</td>
+                            <td class="warning">pendiente</td>
+                            <td class="primary">Detalles</td>
+                        </tr>
+                        <tr>
+                            <td>Laptop gamer</td>
+                            <td>$500</td>
+                            <td>Logitech</td>
+                            <td class="warning">pendiente</td>
+                            <td class="primary">Detalles</td>
+                        </tr>
+                        <tr>
+                            <td>Laptop gamer</td>
+                            <td>$500</td>
+                            <td>Logitech</td>
+                            <td class="warning">pendiente</td>
+                            <td class="primary">Detalles</td>
+                        </tr>
+                        <tr>
+                            <td>Laptop gamer</td>
+                            <td>$500</td>
+                            <td>Logitech</td>
+                            <td class="warning">pendiente</td>
+                            <td class="primary">Detalles</td>
+                        </tr>
+                        <tr>
+                            <td>Laptop gamer</td>
+                            <td>$500</td>
+                            <td>Logitech</td>
+                            <td class="warning">pendiente</td>
+                            <td class="primary">Detalles</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <a href="Show all"></a>
+            </div>
+
+        </main>
+
+        <!-- Seccion de la parte derecha del dashboard o pagina princiapl, donde se ven ultimas novedades de la app y las estadisticas de los ultimos productos -->
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>Billy</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="{% static 'imagenes/profile-1.jpg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-updates">
+                <h2>Novedades</h2>
+                <div class="updates">
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="{% static 'imagenes/profile-2.jpg' %}" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Billy Cañas</b> ha añadido un nuevo producto</p>
+                            <small class="text-muted">Hace 2 minutos</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="{% static 'imagenes/profile-3.jpg' %}" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Billy Cañas</b> ha añadido un nuevo producto</p>
+                            <small class="text-muted">Hace 35 minutos</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="{% static 'imagenes/profile-4.jpg' %}" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Billy Cañas</b> ha añadido un nuevo producto</p>
+                            <small class="text-muted">Hace 1 hora</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sales-analytics">
+                <h2>Ventas</h2>
+                <div class="item online">
+                    <div class="icon">
+                        <span class="material-icons-sharp">shopping_cart</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Compras en linea</h3>
+                            <small class="text-muted">Ultimas 24 horas</small>
+                        </div>
+                        <h5 class="success">+39%</h5>
+                        <h3>4567</h3>
+                    </div>
+                </div>
+                <div class="item offline">
+                    <div class="icon">
+                        <span class="material-icons-sharp">local_mall</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Devoluciones</h3>
+                            <small class="text-muted">Ultimas 24 horas</small>
+                        </div>
+                        <h5 class="danger">-17%</h5>
+                        <h3>4567</h3>
+                    </div>
+                </div>
+                <div class="item customers">
+                    <div class="icon">
+                        <span class="material-icons-sharp">person</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Nuevos clientes</h3>
+                            <small class="text-muted">Ultimas 24 horas</small>
+                        </div>
+                        <h5 class="success">+15%</h5>
+                        <h3>894</h3>
+                    </div>
+                </div>
+
+                <div class="item add-product">
+                    <div>
+                        <span class="material-icons-sharp">add</span>
+                        <h3>Anadir producto</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Ultima seccion del documento destinada para los enlaces a los archivos externos de JAVASCRIPT -->
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+
+</html>

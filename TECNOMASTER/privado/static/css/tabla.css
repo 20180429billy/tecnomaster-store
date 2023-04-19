@@ -1,0 +1,95 @@
+
+
+/*TABLA /////////////////////////////////////////////////////////////*/
+
+/*se editan los estilos de la tabla principal de productos*/
+
+.tabla-productos {
+    background-color: white;
+    border-radius: 7px;
+
+
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    background: white;
+}
+
+th,
+td {
+    border: 1px solid lightgray;
+    padding: 8px;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+th:first-child,
+td:first-child {
+    width: 40px;
+}
+
+th:last-child,
+td:last-child,
+th:nth-child(8),th:nth-child(9),
+td:nth-child(8),td:nth-child(9) {
+    text-align: center;
+    width: 60px;
+    
+}
+
+td:last-child,
+td:nth-child(8),td:nth-child(9){
+    cursor: pointer;
+}
+
+
+
+.tWrap td, th{
+    text-align: center;
+}
+
+th {
+    background: rgb(200, 200, 200);
+    color: white;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+table tr:first-child td {
+    border-top: none;
+}
+
+.container-1 {
+    background: transparent;
+    width: 100%;
+    padding: 24px;
+    height: 640px;
+    margin: 0;
+}
+
+.tWrap {
+    height: 100%;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.tWrap__head {
+    flex: 0 0 37px;
+}
+
+.tWrap__body {
+    overflow-y: scroll;
+}
+
+
+/* .container{
+    overflow-y: scroll;
+} */
+

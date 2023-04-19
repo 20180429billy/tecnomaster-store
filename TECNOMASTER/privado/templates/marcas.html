@@ -1,0 +1,243 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina de marcas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://kit.fontawesome.com/00a6c7d014.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+      rel="stylesheet">
+</head>
+<body> 
+    <div class="container-productos">
+        <!-- Menu desplegable de la parte izquieda del sitio privado -->
+        <aside>
+            <!-- Parte superior del aside donde se encuentra el logo y un boton para cerrar el formulario que es active cuando esta en mobile -->
+            <div class="top">
+                <div class="logo">
+                    <img src="{% static 'imagenes/logo_tecnomaster.png' %}" alt="">
+                    <h2>TECNO<span class="danger">MASTER</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+            <!-- Parte () o inferior del aside, donde se encuentran todos los link y botontes de navegacion de sitio privado -->
+            <div class="sidebar">
+                <a href="{% url 'dashboard' %}" >
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{% url 'usuarios' %}">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Usuarios</h3>
+                </a>
+                <a href="{% url 'productos' %}">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Productos</h3>
+                </a>
+                <a href="{% url 'categorias' %}">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Categorias</h3>
+                </a>
+                <a href="{% url 'marcas' %}" class="active">
+                    <span class="material-icons-sharp">mail_outline</span>
+                    <h3>Marcas</h3>
+                    <!-- <span class="message-count">26</span> -->
+                </a>
+                <a href="{% url 'valoraciones' %}">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Valoraciones</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Ajustes</h3>
+                </a>
+                <a href="{% url 'productos' %}">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Agregar producto</h3>
+                </a>
+                <a href="{% url 'index' %}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Cerrar sesion</h3>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Seccion principal del sitio privado, donde se encuentrar todas las funciones, estadisticas y tablas de datos que se pueden consultar del sitio privado -->
+        <main class="contenedor-1">
+            <div class="contenido">
+                <!-- Parte de navegacion princpal de seccion principal de sitio privado, donde se puede consultar el perfil, las notificaciones y que tambien sirve para desplegar el menu cuando esta en mobile -->
+                <div class="usuario_notificaciones-nav" >
+                    <div class="directorio" id="menu-btn">
+                        <h3>Dashboard</h3>
+                    </div>
+                    <div class="profile-cuenta">
+                        <div>
+                            <span class="material-icons-sharp">
+                                notifications
+                            </span>
+                        </div>
+                        <div>
+                            <span class="material-icons-sharp">
+                                account_circle
+                            </span>
+                        </div>
+                        <a href="">Billy Cañas</a>
+                        <div>
+                            <span class="material-icons-sharp">
+                                expand_more
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido principal de informacion, donde se consulta toda la informacion y se gestionan todas las tablas de la base de datos y se realizan los SCRUD´S -->
+                <div class="contenido_privado-productos">
+                    <div class="descripcion-producto">
+                        <div>
+                            <h3>Marcas</h3>
+                        </div>
+                        <div class="agregar-producto-button_access">
+                            <a id="btn-abrir-modal">
+                                Agregar Marca
+                                <i class="fa-solid fa-plus"></i>
+                                
+                            </a>
+                            <dialog id="modal" >
+                                <h3>Crear marca</h3>
+                                <form action="" method="dialog" class="formulario-agregar_marca formulario-agregar">
+                                    <div>
+                                        <label for="">Marca</label>
+                                        <input type="text">
+                                    </div>
+                                    <div class="imagen_formulario">
+                                        <label for="">Logo</label>
+                                        <img src="{% static 'imagenes/no-image.png' %}" alt="">
+                                    </div>
+                                    <div>
+                                        <button class="hola" type="submit">Agregar</button>
+                                    </div>
+                                </form>
+                            </dialog>
+                            <span class="material-icons-sharp">
+                                menu
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="filtrar-producto">
+                        <div class="search-producto_filtrar">
+                            <p>Que estas buscando?</p>
+                            <input type="text" placeholder="buscar por id, nombre">
+                        </div>
+                        
+                        <div class="boton-productos_filtrar">
+                            <a href="">Buscar</a>
+                        </div>
+                    </div>
+                    <div class="tabla-productos tabla-admin">
+                        <div class="container-1">
+                            <div class="tWrap">
+                                <div class="tWrap__head">
+                                    <table class="t-admin">
+                                        <thead>
+                                            <tr class="th-tr_marcas tr-admin th-admin">
+                                                <th>ID</th>
+                                                <th>Marca</th>
+                                                <th>Logo</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div> <!--/.tWrap__head-->
+                                <div class="tWrap__body">
+                                    <table class="t-admin">
+                                        <tbody>
+                                            <tr class="td-tr_marcas tr-admin td-admin">
+                                                <td>1</td>
+                                                <td>Razer</td>
+                                                <td class="imagen_tabla-td"><img class="imagen_tabla" src="{% static 'imagenes/hp_logo.png' %}" alt=""></td>
+                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                                <td><i class="fa-solid fa-trash"></i></td>
+                                            </tr>
+                                            <tr class="td-tr_marcas tr-admin td-admin">
+                                                <td>1</td>
+                                                <td>Razer</td>
+                                                <td class="imagen_tabla-td"><img class="imagen_tabla" src="{% static 'imagenes/hp_logo.png' %}" alt=""></td>
+                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                                <td><i class="fa-solid fa-trash"></i></td>
+                                            </tr>
+                                            <tr class="td-tr_marcas tr-admin td-admin">
+                                                <td>1</td>
+                                                <td>Razer</td>
+                                                <td class="imagen_tabla-td"><img class="imagen_tabla" src="{% static 'imagenes/hp_logo.png' %}" alt=""></td>
+                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                                <td><i class="fa-solid fa-trash"></i></td>
+                                            </tr>
+                                            <tr class="td-tr_marcas tr-admin td-admin">
+                                                <td>1</td>
+                                                <td>Razer</td>
+                                                <td class="imagen_tabla-td"><img class="imagen_tabla" src="{% static 'imagenes/hp_logo.png' %}" alt=""></td>
+                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                                <td><i class="fa-solid fa-trash"></i></td>
+                                            </tr>
+                                            <tr class="td-tr_marcas tr-admin td-admin">
+                                                <td>1</td>
+                                                <td>Razer</td>
+                                                <td class="imagen_tabla-td"><img class="imagen_tabla" src="{% static 'imagenes/hp_logo.png' %}" alt=""></td>
+                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                                <td><i class="fa-solid fa-trash"></i></td>
+                                            </tr>
+                                            <tr class="td-tr_marcas tr-admin td-admin">
+                                                <td>1</td>
+                                                <td>HP</td>
+                                                <td class="imagen_tabla-td"><img class="imagen_tabla" src="{% static 'imagenes/hp_logo.png' %}" alt=""></td>
+                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                                <td><i class="fa-solid fa-trash"></i></td>
+                                            </tr>
+                                            <tr class="td-tr_marcas tr-admin td-admin">
+                                                <td>1</td>
+                                                <td>Razer</td>
+                                                <td class="imagen_tabla-td"><img class="imagen_tabla" src="{% static 'imagenes/hp_logo.png' %}" alt=""></td>
+                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                                <td><i class="fa-solid fa-trash"></i></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div> <!--/.tWrap__body-->
+                            </div> <!--/.tWrap-->
+                        </div> <!--/.container-->
+                    </div>
+                </div>
+            </div>
+        </main>
+    
+
+    </div>
+
+    <!-- Ultima seccion del documento destinada para los enlaces a los archivos externos de JAVASCRIPT -->
+
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
+</body>
+</html>
