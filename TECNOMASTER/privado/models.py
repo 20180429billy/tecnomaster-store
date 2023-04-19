@@ -8,4 +8,8 @@ class Categoria(models.Model):
     image = models.ImageField(null=True, upload_to="articles")
 
     def __str__(self):
-        return self.nombre 
+        return self.nombre  
+
+    def delete(self, usign=None, keep_parents=False):
+        self.image.storage.delete(self.image.name)
+        super().delete()

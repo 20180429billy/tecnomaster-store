@@ -26,11 +26,11 @@ closeBtn.addEventListener("click", ()=>{
     sideMenu.style.display = "none";
 });
 
-
-
 btnCerrarModal.addEventListener("click", ()=>{
     modal.close();
 });
+
+/*  */
 
 
 

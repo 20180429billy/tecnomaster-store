@@ -1,3 +1,4 @@
+import os
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Categoria
@@ -16,7 +17,7 @@ def usuarios(request):
     return render(request, "usuarios.html")
 
 def valoraciones(request):
-    return render(request, "valoraciones.html")
+    return render(request, "valoraciones.html") 
 
 def add_categorias(request):
     if request.method == "POST" and request.FILES['image']:
@@ -29,22 +30,24 @@ def add_categorias(request):
     else:
         return redirect("categorias")
     
+    
+    
 def edit_categorias(request, categoria_id):
+    categoria = Categoria.objects.get(id = categoria_id)
+    
     if request.method == "POST":
-        print(request.POST)
-        categoria = Categoria.objects.get(id = categoria_id)
+        if len(request.FILES) != 0:
+            if len(categoria.image):
+                print("")
+            categoria.image = request.FILES['image']
+        
         categoria.nombre = request.POST["nombre"]
         categoria.descripcion = request.POST["descripcion"]
-        
-        if request.POST["image."] == "":
-            categoria.save()
-            return redirect("categorias")
-        else:
-            categoria.image = request.FILES['image']
         categoria.save()
         return redirect("categorias")
     else:
         return redirect("categorias")
+    
     
     
 def delete_categorias(request, categoria_id):
