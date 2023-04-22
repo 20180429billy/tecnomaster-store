@@ -1,6 +1,6 @@
 {% load static %}
 
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head> 
     <meta charset="UTF-8">
@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet" />
+
+    
 
     <link rel="stylesheet" href="https://kit.fontawesome.com/00a6c7d014.css" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
@@ -42,11 +44,11 @@
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="{% url 'usuarios' %}" class="active">
+                <a href="{% url 'usuarios' %}" >
                     <span class="material-icons-sharp">person_outline</span>
                     <h3>Usuarios</h3>
                 </a>
-                <a href="{% url 'clientes' %}">
+                <a href="{% url 'clientes' %}" class="active">
                     <span class="material-icons-sharp">person_outline</span>
                     <h3>Usuarios</h3>
                 </a>
@@ -113,46 +115,72 @@
                 <div class="contenido_privado-productos">
                     <div class="descripcion-producto">
                         <div>
-                            <h3>Usuarios</h3>
+                            <h3>Clientes</h3>
                         </div>
                         <div class="agregar-producto-button_access">
-                            <a id="btn-abrir-modal">
-                                Agregar Usuarios
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Agregar cliente
                                 <i class="fa-solid fa-plus"></i>
-                                
-                            </a>
-                            <dialog id="modal" >
-                                <h3>Crear Usuario</h3>
-                                <form action="" method="dialog" class="formulario-agregar_usuario formulario-agregar">
-                                    <div>
-                                        <label for="">Nombres</label>
-                                        <input type="text">
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar categoria</h1>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div>
-                                        <label for="">Apellidos</label>
-                                        <input type="text">
+                                    <div class="modal-body">
+                                        <!-- modal -->
+                                        <form action="" method="dialog" class="formulario-agregar_usuario formulario-agregar">
+                                            <div>
+                                                <label for="">Nombres</label>
+                                                <input type="text" required name="nombres">
+                                            </div>
+                                            <div>
+                                                <label for="">Apellidos</label>
+                                                <input type="text" required name="apellidos">
+                                            </div>
+                                            <div>
+                                                <label for="">Dui</label>
+                                                <input type="number" required name="dui">
+                                            </div>
+                                            <div>
+                                                <label for="">Correo</label>
+                                                <input type="email" required name="correo">
+                                            </div>
+                                            <div>
+                                                <label for="">Telefono</label>
+                                                <input type="number" required name="telefono">
+                                            </div>
+                                            <div>
+                                                <label for="">Direccion</label>
+                                                <input type="text" required name="direccion"> 
+                                            </div>
+                                            <div>
+                                                <label for="">Clave Usuario</label>
+                                                <input type="password" required name="clave">
+                                            </div>
+                                            <div>
+                                                <label for="">Usuario</label>
+                                                <input type="text" required name="usuario">
+                                            </div>
+                                            <div>
+                                                <label for="">Estado Cliente</label>
+                                                <select class="form-select" aria-label="Default select example" required name="id_estado">
+                                                    <option value="">Selecciona</option>
+                                                    {% for estado in estados %}
+                                                        <option value="{{estado.id}}">{{estado.estado_cliente}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <button class="hola" type="submit">Agregar</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div>
-                                        <label for="">Correo</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Alias</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Tipo de usuario</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Estado Usuario</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <button class="hola" type="submit">Agregar</button>
-                                    </div>
-                                </form>
-                            </dialog>
+                                  </div>
+                                </div>
+                              </div>
                             <span class="material-icons-sharp">
                                 menu
                             </span>
@@ -200,9 +228,11 @@
                                                 <th>ID</th>
                                                 <th>Nombres</th>
                                                 <th>Apellidos</th>
+                                                <th>Dui</th>
                                                 <th>Correo</th>
-                                                <th>Alias</th>
-                                                <th>Tipo</th>
+                                                <th>Telefono</th>
+                                                <th>Direccion</th>
+                                                <th>Usuario</th>
                                                 <th>Estado</th>
                                                 <th></th>
                                                 <th></th>
@@ -213,106 +243,7 @@
                                 <div class="tWrap__body">
                                     <table class="t-admin">
                                         <tbody>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-
+                                            
                                         </tbody>
                                     </table>
                                 </div> <!--/.tWrap__body-->

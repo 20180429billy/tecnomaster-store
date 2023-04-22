@@ -30,6 +30,7 @@ urlpatterns = [
     path("delete_categorias/<int:categoria_id>", views.delete_categorias, name="delete_categorias"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("", views.index, name="index"),
+    path("clientes", views.clientes, name="clientes")
 ]
 
 if settings.DEBUG:

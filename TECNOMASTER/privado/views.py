@@ -1,23 +1,38 @@
 import os
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import Categoria
+from .models import *
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 #get_object_or_404
 
+#===============================MARCAS====================================
+
 def marcas(request):
     return render(request, "marcas.html")
+
+#============================================================================
+#===============================PRODUCTOS====================================
 
 def productos(request):
     return render(request, "productos.html")
 
+#============================================================================
+#===============================USUARIOS====================================
+
 def usuarios(request):
     return render(request, "usuarios.html")
 
+#============================================================================
+#===============================VALORACIONES====================================
+
 def valoraciones(request):
     return render(request, "valoraciones.html") 
+
+#=============================================================================
+#===============================CATEGORIAS====================================
+#
 
 def add_categorias(request):
     if request.method == "POST" and request.FILES['image']:
@@ -38,7 +53,7 @@ def edit_categorias(request, categoria_id):
     if request.method == "POST":
         if len(request.FILES) != 0:
             if len(categoria.image):
-                print("")
+                os.remove(categoria.image.path)
             categoria.image = request.FILES['image']
         
         categoria.nombre = request.POST["nombre"]
@@ -62,10 +77,26 @@ def categorias(request):
     return render(request, "categorias.html", {
         "categorias" : categorias
     })
+    
+#============================================================================
+#===============================DASHBOARD====================================
 
 def dashboard(request):
     return render(request, "dashboard.html")
 
+#============================================================================
+#===============================LOGIN====================================
+
 def index(request):
     return render(request, "index.html")
+
+#============================================================================
+#===============================CLIENTES====================================
+
+def clientes(request):
+    estado = EstadoCliente.objects.all()
+    context = {
+        "estados":estado
+    }
+    return render(request, "clientes.html", context)
 
