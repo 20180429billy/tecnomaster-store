@@ -50,7 +50,7 @@
                 </a>
                 <a href="{% url 'clientes' %}" class="active">
                     <span class="material-icons-sharp">person_outline</span>
-                    <h3>Usuarios</h3>
+                    <h3>Clientes</h3>
                 </a>
                 <a href="{% url 'productos' %}">
                     <span class="material-icons-sharp">receipt_long</span>
@@ -122,16 +122,18 @@
                                 Agregar cliente
                                 <i class="fa-solid fa-plus"></i>
                             </button>
+                            <!-- MODAL  -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar categoria</h1>
+                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar cliente</h1>
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <!-- modal -->
-                                        <form action="" method="dialog" class="formulario-agregar_usuario formulario-agregar">
+                                        <form action="{% url "add_cliente" %}" method="POST" class="formulario-agregar_usuario formulario-agregar">
+                                            {% csrf_token %}
                                             <div>
                                                 <label for="">Nombres</label>
                                                 <input type="text" required name="nombres">
@@ -181,6 +183,7 @@
                                   </div>
                                 </div>
                               </div>
+                              <!-- final MODAL -->
                             <span class="material-icons-sharp">
                                 menu
                             </span>
@@ -224,7 +227,7 @@
                                 <div class="tWrap__head">
                                     <table class="t-admin">
                                         <thead>
-                                            <tr class="th-tr_productos tr-admin th-admin">
+                                            <tr class="th-tr_clientes tr-admin th-admin">
                                                 <th>ID</th>
                                                 <th>Nombres</th>
                                                 <th>Apellidos</th>
@@ -234,8 +237,8 @@
                                                 <th>Direccion</th>
                                                 <th>Usuario</th>
                                                 <th>Estado</th>
-                                                <th></th>
-                                                <th></th>
+                                                <th class="botones_table"></th>
+                                                <th class="botones_table"></th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -243,7 +246,103 @@
                                 <div class="tWrap__body">
                                     <table class="t-admin">
                                         <tbody>
-                                            
+                                            {% for cliente in clientes %}
+                                                <tr class="td-tr_clientes tr-admin td-admin">
+                                                    <td>{{cliente.id}}</td>
+                                                    <td>{{cliente.nombres}}</td>
+                                                    <td>{{cliente.apellidos}}</td>
+                                                    <td>{{cliente.dui}}</td>
+                                                    <td>{{cliente.correo}}</td>
+                                                    <td>{{cliente.telefono}}</td>
+                                                    <td>{{cliente.direccion}}</td>
+                                                    <td>{{cliente.usuario}}</td>
+                                                    <td>{{cliente.id_estado}}</td>
+                                                    <td class="botones_table">
+                                                        <button type="button"  class="edit-td" data-bs-toggle="modal" data-bs-target="#editModal{{cliente.id}}">
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td class="botones_table"><a href="{% url 'delete_cliente' cliente.id %}" class="delete-td">
+                                                        <div class="delete-td_div">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </div>
+                                                    </a></td>
+                                                </tr>
+                                                <!-- MODAL============================================ -->
+                                                <div class="modal fade" id="editModal{{cliente.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar cliente</h1>
+                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- modal -->
+                                                            <div>
+                                                                <form action="{% url "edit_cliente" cliente.id %}" method="POST" class="formulario-agregar_usuario formulario-agregar">
+                                                                    {% csrf_token %}
+                                                                    <div class="formulario-agregar_usuario formulario-agregar">
+                                                                        <div>
+                                                                            <label for="">ID</label>
+                                                                            <input type="text" readonly name="id" value="{{cliente.id}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="">Nombres</label>
+                                                                            <input type="text" required name="nombres" value="{{cliente.nombres}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="">Apellidos</label>
+                                                                            <input type="text" required name="apellidos" value="{{cliente.apellidos}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="">Dui</label>
+                                                                            <input type="number" required name="dui" value="{{cliente.dui}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="">Correo</label>
+                                                                            <input type="email" required name="correo" value="{{cliente.correo}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="">Telefono</label>
+                                                                            <input type="number" required name="telefono" value="{{cliente.telefono}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="">Direccion</label>
+                                                                            <input type="text" required name="direccion" value="{{cliente.direccion}}"> 
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="">Clave Usuario</label>
+                                                                            <input type="password" required name="clave" value="{{cliente.clave}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="">Usuario</label>
+                                                                            <input type="text" required name="usuario" value="{{cliente.usuario}}">
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="">Estado Cliente</label>
+                                                                            <select class="form-select" aria-label="Default select example" required name="id_estado">
+                                                                                <option value="">Selecciona</option>
+                                                                                {% for estado in estados %}
+                                                                                    {% if estado.id == cliente.id_estado.id %}
+                                                                                        <option value="{{estado.id}}" selected>{{estado.estado_cliente}}</option>    
+                                                                                    {% else %}   
+                                                                                        <option value="{{estado.id}}">{{estado.estado_cliente}}</option>                                                                                 
+                                                                                    {% endif %}
+                                                                                    
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button class="hola" type="submit">Agregar</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div> <!--/.tWrap__body-->

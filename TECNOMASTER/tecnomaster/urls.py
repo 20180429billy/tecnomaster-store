@@ -30,9 +30,14 @@ urlpatterns = [
     path("delete_categorias/<int:categoria_id>", views.delete_categorias, name="delete_categorias"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("", views.index, name="index"),
-    path("clientes", views.clientes, name="clientes")
+    path("clientes", views.clientes, name="clientes"),
+    path("add_cliente/", views.add_cliente, name="add_cliente"),
+    path("edit_cliente/<int:cliente_id>", views.edit_cliente, name="edit_cliente"),
+    path("delete_cliente/<int:cliente_id>", views.delete_cliente, name="delete_cliente")
+    
 ]
 
 if settings.DEBUG:
     from django.conf.urls.static import static
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    

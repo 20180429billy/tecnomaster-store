@@ -1012,7 +1012,10 @@ div.seleccionar_archivo-form > input{
 }
 
 
-
+.botones_table{
+    text-align: center;
+    width: 60px;
+}
 
 /*//////////////////////////////////////*/
 

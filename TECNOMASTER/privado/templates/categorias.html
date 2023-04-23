@@ -51,7 +51,7 @@
                 </a>
                 <a href="{% url 'clientes' %}">
                     <span class="material-icons-sharp">person_outline</span>
-                    <h3>Usuarios</h3>
+                    <h3>Clientes</h3>
                 </a>
                 <a href="{% url 'productos' %}">
                     <span class="material-icons-sharp">receipt_long</span>
@@ -200,7 +200,6 @@
                                                     <td class="imagen_tabla-td"><img class="imagen_tabla"
                                                             src="{{ categoria.image.url }}" alt=""></td>
                                                     <td>
-                                                        
                                                         <button type="button"  class="edit-td" data-bs-toggle="modal" data-bs-target="#editModal{{categoria.id}}">
                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                         </button>

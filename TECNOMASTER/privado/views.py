@@ -95,8 +95,55 @@ def index(request):
 
 def clientes(request):
     estado = EstadoCliente.objects.all()
+    clientes = Cliente.objects.all().order_by("id")
     context = {
-        "estados":estado
+        "estados":estado,
+        "clientes": clientes
     }
     return render(request, "clientes.html", context)
+
+def add_cliente(request):
+    if request.method == "POST":
+        cliente = Cliente()
+        cliente.nombres = request.POST["nombres"]
+        cliente.apellidos = request.POST["apellidos"]
+        cliente.dui = request.POST["dui"]
+        cliente.correo = request.POST["correo"]
+        cliente.telefono = request.POST["telefono"]
+        cliente.direccion = request.POST["direccion"]
+        cliente.clave = request.POST["clave"]
+        cliente.usuario = request.POST["usuario"]
+        estado_cliente = request.POST["id_estado"]
+        cliente.id_estado = EstadoCliente.objects.get(id = estado_cliente)
+        cliente.save()
+        return redirect("clientes")
+    else:
+        return redirect("clientes")
+    
+def edit_cliente(request, cliente_id):
+    cliente = Cliente.objects.get(id = cliente_id)
+    
+    if request.method == "POST":
+        cliente.nombres = request.POST["nombres"]
+        cliente.apellidos = request.POST["apellidos"]
+        cliente.dui = request.POST["dui"]
+        cliente.correo = request.POST["correo"]
+        cliente.telefono = request.POST["telefono"]
+        cliente.direccion = request.POST["direccion"]
+        cliente.clave = request.POST["clave"]
+        cliente.usuario = request.POST["usuario"]
+        estado_cliente = request.POST["id_estado"]
+        cliente.id_estado = EstadoCliente.objects.get(id = estado_cliente)
+        cliente.save()
+        return redirect("clientes")
+    else:
+        return redirect("clientes")
+    
+def delete_cliente(request, cliente_id):
+    cliente = Cliente.objects.get(id = cliente_id)
+    cliente.delete()
+    return redirect("clientes")
+    
+        
+
 

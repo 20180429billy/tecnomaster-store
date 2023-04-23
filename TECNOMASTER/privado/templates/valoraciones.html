@@ -47,6 +47,10 @@
                     <span class="material-icons-sharp">person_outline</span>
                     <h3>Usuarios</h3>
                 </a>
+                <a href="{% url 'clientes' %}">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Clientes</h3>
+                </a>
                 <a href="{% url 'productos' %}">
                     <span class="material-icons-sharp">receipt_long</span>
                     <h3>Productos</h3>
@@ -158,18 +162,7 @@
                     <div class="filtrar-producto">
                         <div class="search-producto_filtrar">
                             <p>Que estas buscando?</p>
-                            <input type="text" placeholder="buscar por id, nombre">
-                        </div>
-                        <div class="categoria-producto_filtrar">
-                            <p>Valoracion</p>
-                            <div class="dropdown">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Selecciona</option>
-                                    <option value="1">5 estrellas</option>
-                                    <option value="2">4 estrellas</option>
-                                    <option value="3">3 estrellas</option>
-                                </select>
-                            </div>
+                            <input type="text" placeholder="buscar por id, nombre o producto">
                         </div>
                         <div class="boton-productos_filtrar">
                             <a href="">Buscar</a>
