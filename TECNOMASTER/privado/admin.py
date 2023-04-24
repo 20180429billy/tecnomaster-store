@@ -5,4 +5,6 @@ from .models import *
 admin.site.register(Categoria)
 admin.site.register(EstadoCliente)
 admin.site.register(Cliente)
-
+admin.site.register(EstadoUsuario)
+admin.site.register(TipoUsuario)
+admin.site.register(Usuario)

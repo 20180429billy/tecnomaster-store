@@ -10,7 +10,7 @@ from django.core.files.storage import FileSystemStorage
 #===============================MARCAS====================================
 
 def marcas(request):
-    return render(request, "marcas.html")
+    return render(request, "marcas.html") 
 
 #============================================================================
 #===============================PRODUCTOS====================================
