@@ -36,6 +36,29 @@ class Cliente(models.Model):
     def __str__(self):
         return self.nombres
     
+class EstadoUsuario(models.Model):
+    tipo_usuario = models.CharField(max_length=150) 
+    descripcion_tipo_usuario = models.CharField(max_length=250)
+    
+    def __str__(self):
+        return self.tipo_usuario
+    
+class TipoUsuario:
+    estado_usuario = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.estado_usuario
+    
+class Usuario(models.Model):
+    nombre_usuario = models.CharField(max_length=100, verbose_name="Nombre Usuario")
+    apellido_usuario = models.CharField(max_length=100)
+    correo_usuario = models.CharField(max_length=150)
+    alias_usuario = models.CharField(max_length=100)
+    clave_usuario = models.CharField(max_length=100)
+    id_estado_usuario = models.ForeignKey(EstadoUsuario, on_delete=models.CASCADE)
+    id_tipo_usuario = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
+    
+    
 
     
     
