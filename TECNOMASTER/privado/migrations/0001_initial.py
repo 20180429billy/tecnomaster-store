@@ -52,11 +52,8 @@ class Migration(migrations.Migration):
                 ('dui', models.IntegerField()),
                 ('correo', models.CharField(max_length=150)),
                 ('telefono', models.IntegerField()),
-                ('direccion', models.CharField(max_length=250)),
-                ('clave', models.CharField(max_length=150)),
-                ('usuario', models.CharField(max_length=150)),
-                ('id_estado', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='privado.estadocliente')),
-                #dfasdfa
+
+
             ],
 
             
