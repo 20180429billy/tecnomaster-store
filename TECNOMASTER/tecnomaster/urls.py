@@ -22,6 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("marcas/", views.marcas, name="marcas"),
     path("add_marcas/", views.add_marcas, name="add_marcas"),
+    path("edit_marcas/<int:id_marca>", views.edit_marcas, name="edit_marcas"),
+    path("delete_marcas/<int:id_marca>", views.delete_marcas, name="delete_marcas"),
     path("productos/", views.productos, name="productos"),
     path("usuarios/", views.usuarios, name="usuarios"),
     path("add_usuarios/", views.add_usuarios, name="add_usuarios"), 

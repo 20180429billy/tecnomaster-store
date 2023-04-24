@@ -75,6 +75,22 @@ class Marcas(models.Model):
         return self.marca
 
 
+def edit_categorias(request, categoria_id):
+    categoria = Categoria.objects.get(id = categoria_id)
+    
+    if request.method == "POST":
+        if len(request.FILES) != 0:
+            if len(categoria.image):
+                os.remove(categoria.image.path)
+            categoria.image = request.FILES['image']
+        
+        categoria.nombre = request.POST["nombre"]
+        categoria.descripcion = request.POST["descripcion"]
+        categoria.save()
+        return redirect("categorias")
+    else:
+        return redirect("categorias")
+
 
     
 

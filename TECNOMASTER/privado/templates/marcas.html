@@ -134,7 +134,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- modal -->
-                                            <form action="{% url 'add_marcas' %}" method="POST">
+                                            <form action="{% url 'add_marcas' %}" method="POST" enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <div class="formulario-agregar_marca formulario-agregar">
                                                     <div>
@@ -203,7 +203,7 @@
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                     </button>
                                                 </td>
-                                                <td class="botones_table"><a href="{% url 'delete_cliente' marca.id %}"
+                                                <td class="botones_table"><a href="{% url 'delete_marcas' marca.id %}"
                                                         class="delete-td">
                                                         <div class="delete-td_div">
                                                             <i class="fa-solid fa-trash"></i>
@@ -223,9 +223,10 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <!-- modal -->
-                                                            <form action="" method="POST">
-                                                                <div
-                                                                    class="formulario-agregar_marca formulario-agregar">
+                                                            <form action="{% url 'edit_marcas' marca.id %}" method="POST" enctype="multipart/form-data">
+                                                                {% csrf_token %}
+                                                                <div class="formulario-agregar_marca formulario-agregar">
+                                                                    
                                                                     <div>
                                                                         <label for="">Marca</label>
                                                                         <input type="text" name="marca" value="{{marca.marca}}">

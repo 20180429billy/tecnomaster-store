@@ -25,7 +25,26 @@ def add_marcas(request):
         return redirect("marcas")
     else:
         return redirect("marcas")
+
+def edit_marcas(request, id_marca):
+    marca = Marcas.objects.get(id = id_marca)
     
+    if request.method == "POST":
+        if len(request.FILES) != 0:
+            if len(marca.image):
+                os.remove(marca.image.path)
+            marca.image = request.FILES["image"]
+
+        marca.marca = request.POST["marca"]
+        marca.save()
+        return redirect("marcas")
+    else:
+        return redirect("marcas")
+    
+def delete_marcas(request, id_marca):
+    marca = Marcas.objects.get(id = id_marca)
+    marca.delete()
+    return redirect("marcas")
 
 #============================================================================
 #===============================PRODUCTOS====================================
