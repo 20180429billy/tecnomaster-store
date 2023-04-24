@@ -16,6 +16,17 @@ def marcas(request):
     }
     return render(request, "marcas.html", context) 
 
+def add_marcas(request):
+    if request.method == "POST" and request.FILES['image']:
+        marca = Marcas()
+        marca.marca = request.POST["marca"]
+        marca.image = request.FILES["image"]
+        marca.save()
+        return redirect("marcas")
+    else:
+        return redirect("marcas")
+    
+
 #============================================================================
 #===============================PRODUCTOS====================================
 

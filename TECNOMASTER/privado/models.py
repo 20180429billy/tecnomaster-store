@@ -69,10 +69,12 @@ class Usuario(models.Model):
         
 class Marcas(models.Model):
     marca = models.CharField(max_length=100)
-    logo = models.ImageField(null=True, upload_to="articles")
+    image = models.ImageField(null=True, upload_to="articles")
 
     def __str__(self):
         return self.marca
+
+
 
     
 
