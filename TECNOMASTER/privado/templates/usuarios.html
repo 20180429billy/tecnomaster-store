@@ -1,8 +1,9 @@
 {% load static %}
 
-<!DOCTYPE html> 
-<html lang="es"> 
-<head> 
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,10 +20,10 @@
     <link rel="stylesheet" href="https://kit.fontawesome.com/00a6c7d014.css" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 </head>
-<body> 
+
+<body>
     <div class="container-productos">
         <!-- Menu desplegable de la parte izquieda del sitio privado -->
         <aside>
@@ -86,7 +87,7 @@
         <main class="contenedor-1">
             <div class="contenido">
                 <!-- Parte de navegacion princpal de seccion principal de sitio privado, donde se puede consultar el perfil, las notificaciones y que tambien sirve para desplegar el menu cuando esta en mobile -->
-                <div class="usuario_notificaciones-nav" >
+                <div class="usuario_notificaciones-nav">
                     <div class="directorio" id="menu-btn">
                         <h3>Dashboard</h3>
                     </div>
@@ -116,43 +117,77 @@
                             <h3>Usuarios</h3>
                         </div>
                         <div class="agregar-producto-button_access">
-                            <a id="btn-abrir-modal">
-                                Agregar Usuarios
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Agregar usuario
                                 <i class="fa-solid fa-plus"></i>
-                                
-                            </a>
-                            <dialog id="modal" >
-                                <h3>Crear Usuario</h3>
-                                <form action="" method="dialog" class="formulario-agregar_usuario formulario-agregar">
-                                    <div>
-                                        <label for="">Nombres</label>
-                                        <input type="text">
+                            </button>
+                            <!-- MODAL  -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar cliente</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- modal -->
+                                            <form action="{% url 'add_usuarios' %}" method="POST"
+                                                class="formulario-agregar_usuario formulario-agregar">
+
+                                                {% csrf_token %}
+                                                <div>
+                                                    <label for="">Nombres</label>
+                                                    <input type="text" name="nombres">
+                                                </div>
+                                                <div>s
+                                                    <label for="">Apellidos</label>
+                                                    <input type="text" name="apellidos">
+                                                </div>
+                                                <div>
+                                                    <label for="">Correo</label>
+                                                    <input type="text" name="correo">
+                                                </div>
+                                                <div>
+                                                    <label for="">Alias</label>
+                                                    <input type="text" name="alias">
+                                                </div>
+                                                <div>
+                                                    <label for="">Clave</label>
+                                                    <input type="password" name="clave">
+                                                </div>
+                                                <div>
+                                                    <label for="">Estado Usuario</label>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        required name="id_estado_usuario">
+                                                        <option value="">Selecciona</option>
+                                                        {% for estadoUsuario in estadoUsuarios %}
+                                                        <option value="{{estadoUsuario.id}}">
+                                                            {{estadoUsuario.estado_usuario}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="">Tipo Usuario</label>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        required name="id_tipo_usuario">
+                                                        <option value="">Selecciona</option>
+                                                        {% for estado in tipoUsuarios %}
+                                                        <option value="{{estado.id}}">{{estado.tipo_usuario}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <button class="hola" type="submit">Agregar</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <label for="">Apellidos</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Correo</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Alias</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Tipo de usuario</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Estado Usuario</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <button class="hola" type="submit">Agregar</button>
-                                    </div>
-                                </form>
-                            </dialog>
+                                </div>
+                            </div>
+                            <!-- final MODAL -->
                             <span class="material-icons-sharp">
                                 menu
                             </span>
@@ -213,105 +248,117 @@
                                 <div class="tWrap__body">
                                     <table class="t-admin">
                                         <tbody>
+                                            {% for usuario in usuarios %}
                                             <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
+                                                <td>{{usuario.id}}</td>
+                                                <td>{{usuario.nombre_usuario}}</td>
+                                                <td>{{usuario.apellido_usuario}}</td>
+                                                <td>{{usuario.correo_usuario}}</td>
+                                                <td>{{usuario.alias_usuario}}</td>
+                                                <td>{{usuario.id_estado_usuario}}</td>
+                                                <td>{{usuario.id_tipo_usuario}}</td>
+                                                <td class="botones_table">
+                                                    <button type="button" class="edit-td" data-bs-toggle="modal"
+                                                        data-bs-target="#editModal{{usuario.id}}">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </button>
+                                                </td>
+                                                <td class="botones_table"><a
+                                                        href="{% url 'delete_usuarios' usuario.id %}" class="delete-td">
+                                                        <div class="delete-td_div">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </div>
+                                                    </a></td>
                                             </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Billy Seth</td>
-                                                <td>Cañas Palacios</td>
-                                                <td>correo@gmal.com</td>
-                                                <td>billy123</td>
-                                                <td>admin</td>
-                                                <td>Activo</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                            </tr>
+                                            <!-- MODAL EDITAR  -->
+                                            <div class="modal fade" id="editModal{{usuario.id}}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar
+                                                                usuario</h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- modal -->
+                                                            <form action="{% url 'edit_usuarios' usuario.id %}" method="POST" >
+
+                                                                
+                                                                <div class="formulario-agregar_usuario formulario-agregar">
+                                                                    {% csrf_token %}
+                                                                    <div>
+                                                                        <label for="">ID</label>
+                                                                        <input type="text" required value="{{usuario.id}}", name="nombres">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Nombres</label>
+                                                                        <input type="text" required value="{{usuario.nombre_usuario}}", name="nombres">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Apellidos</label>
+                                                                        <input type="text" required value="{{usuario.apellido_usuario}}", name="apellidos">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Correo</label>
+                                                                        <input type="email" required value="{{usuario.correo_usuario}}", name="correo">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Alias</label>
+                                                                        <input type="text" required value="{{usuario.alias_usuario}}", name="alias">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Clave</label>
+                                                                        <input type="password" required value="{{usuario.clave_usuario}}", name="clave">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Estado Usuario</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_estado_usuario">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for estadoUsuario in estadoUsuarios %}
+                                                                                {% if estadoUsuario.id == usuario.id_estado_usuario.id %}
+                                                                                    <option value="{{estadoUsuario.id}}" selected>{{estadoUsuario.estado_usuario}}</option>    
+                                                                                {% else %}   
+                                                                                    <option value="{{estadoUsuario.id}}">{{estadoUsuario.estado_usuario}}</option>                                                                              
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Tipo Usuario</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_tipo_usuario">
+                                                                            <option value="">Selecciona</option>
+    
+                                                                            {% for tipo in tipoUsuarios %}
+                                                                                {% if tipo.id == usuario.id_tipo_usuario.id %}
+                                                                                    <option value="{{tipo.id}}" selected>{{tipo.tipo_usuario}}</option>    
+                                                                                {% else %}   
+                                                                                    <option value="{{tipo.id}}">{{tipo.tipo_usuario}}</option>                                                                              
+                                                                                {% endif %}
+                                                                            {% endfor %}
+    
+                                                                            {% for estado in tipoUsuarios %}
+                                                                            <option value="{{estado.id}}">{{estado.tipo_usuario}}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <button class="hola" type="submit">Agregar</button>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- final MODAL -->
+                                            {% endfor %}
 
                                         </tbody>
                                     </table>
@@ -322,8 +369,8 @@
                 </div>
             </div>
         </main>
-    
- 
+
+
     </div>
 
     <!-- Ultima seccion del documento destinada para los enlaces a los archivos externos de JAVASCRIPT -->
@@ -335,4 +382,5 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
 </body>
+
 </html>

@@ -10,7 +10,11 @@ from django.core.files.storage import FileSystemStorage
 #===============================MARCAS====================================
 
 def marcas(request):
-    return render(request, "marcas.html") 
+    marcas = Marcas.objects.all().order_by("id")
+    context = {
+        "marcas" : marcas
+    }
+    return render(request, "marcas.html", context) 
 
 #============================================================================
 #===============================PRODUCTOS====================================
@@ -22,7 +26,57 @@ def productos(request):
 #===============================USUARIOS====================================
 
 def usuarios(request):
-    return render(request, "usuarios.html")
+    tipo_usuario = TipoUsuario.objects.all()
+    estado_usuario = EstadoUsuario.objects.all()
+    usuario = Usuario.objects.all().order_by("id")
+
+    context = {
+        "tipoUsuarios" : tipo_usuario,
+        "estadoUsuarios" : estado_usuario,
+        "usuarios": usuario
+    }
+    return render(request, "usuarios.html", context)
+
+def add_usuarios(request):
+    if request.method == "POST":
+        usuario = Usuario()
+        usuario.nombre_usuario = request.POST["nombres"]
+        usuario.apellido_usuario  = request.POST["apellidos"]
+        usuario.correo_usuario = request.POST["correo"]
+        usuario.alias_usuario = request.POST["alias"]
+        usuario.clave_usuario = request.POST["clave"]
+        estado_usuario = request.POST["id_estado_usuario"]
+        tipo_usuario = request.POST["id_tipo_usuario"]
+        usuario.id_estado_usuario = EstadoUsuario.objects.get(id = estado_usuario)
+        usuario.id_tipo_usuario = TipoUsuario.objects.get(id = tipo_usuario)
+        usuario.save()
+        return redirect("usuarios")
+    else:
+        return redirect("usuarios")
+        
+def edit_usuarios(request, id_usuario):
+    usuario = Usuario.objects.get(id = id_usuario)
+
+    if request.method == "POST":
+        
+        usuario.nombre_usuario = request.POST["nombres"]
+        usuario.apellido_usuario  = request.POST["apellidos"]
+        usuario.correo_usuario = request.POST["correo"]
+        usuario.alias_usuario = request.POST["alias"]
+        usuario.clave_usuario = request.POST["clave"]
+        estado_usuario = request.POST["id_estado_usuario"]
+        tipo_usuario = request.POST["id_tipo_usuario"]
+        usuario.id_estado_usuario = EstadoUsuario.objects.get(id = estado_usuario)
+        usuario.id_tipo_usuario = TipoUsuario.objects.get(id = tipo_usuario)
+        usuario.save()
+        return redirect("usuarios")
+    else:
+        return redirect("usuarios")
+
+def delete_usuarios(request, id_usuario):
+    usuario = Usuario.objects.get(id = id_usuario)
+    usuario.delete()
+    return redirect("usuarios")
 
 #============================================================================
 #===============================VALORACIONES====================================
