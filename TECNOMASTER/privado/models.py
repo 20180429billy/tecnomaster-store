@@ -75,21 +75,34 @@ class Marcas(models.Model):
         return self.marca
 
 
-def edit_categorias(request, categoria_id):
-    categoria = Categoria.objects.get(id = categoria_id)
+class EstadoProducto(models.Model):
+    estado_producto = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.EstadoProducto
     
-    if request.method == "POST":
-        if len(request.FILES) != 0:
-            if len(categoria.image):
-                os.remove(categoria.image.path)
-            categoria.image = request.FILES['image']
-        
-        categoria.nombre = request.POST["nombre"]
-        categoria.descripcion = request.POST["descripcion"]
-        categoria.save()
-        return redirect("categorias")
-    else:
-        return redirect("categorias")
+
+class Producto(models.Model):
+    id_categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    nombre_producto = models.CharField(max_length=100)
+    descripcion_producto = models.CharField(max_length=100)
+    precio_producto = models.IntegerField()
+    imagen_producto = models.ImageField(null=True, upload_to="articles")
+    especificaciones_producto = models.CharField(max_length=100)
+    descuento = models.IntegerField()
+    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    id_marca = models.ForeignKey(Marcas, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre_producto
+
+
+class ImagenProducto(models.Model):
+    imagen_producto = models.ImageField(null=True, upload_to="articles")
+    id_producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.imagen_producto
 
 
     
