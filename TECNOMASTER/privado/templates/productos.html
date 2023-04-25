@@ -2,7 +2,8 @@
 
 <!DOCTYPE html>
 <html lang="es">
-<head> 
+
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,10 +20,10 @@
     <link rel="stylesheet" href="https://kit.fontawesome.com/00a6c7d014.css" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 </head>
-<body> 
+
+<body>
     <div class="container-productos">
         <!-- Menu desplegable de la parte izquieda del sitio privado -->
         <aside>
@@ -54,7 +55,7 @@
                     <span class="material-icons-sharp">receipt_long</span>
                     <h3>Productos</h3>
                 </a>
-                
+
                 <a href="{% url 'categorias' %}">
                     <span class="material-icons-sharp">insights</span>
                     <h3>Categorias</h3>
@@ -87,7 +88,7 @@
         <main class="contenedor-1">
             <div class="contenido">
                 <!-- Parte de navegacion princpal de seccion principal de sitio privado, donde se puede consultar el perfil, las notificaciones y que tambien sirve para desplegar el menu cuando esta en mobile -->
-                <div class="usuario_notificaciones-nav" >
+                <div class="usuario_notificaciones-nav">
                     <div class="directorio" id="menu-btn">
                         <h3>Dashboard</h3>
                     </div>
@@ -117,51 +118,102 @@
                             <h3>Productos</h3>
                         </div>
                         <div class="agregar-producto-button_access">
-                            <a id="btn-abrir-modal">
-                                Agregar Producto
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Agregar producto
                                 <i class="fa-solid fa-plus"></i>
-                                
-                            </a>
-                            <dialog id="modal" >
-                                <h3>Crear producto</h3>
-                                <form action="" method="dialog" class="formulario-agregar_producto formulario-agregar">
-                                    <div>
-                                        <label for="">Nombre</label>
-                                        <input type="text">
+                            </button>
+                            <!-- MODAL  -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar producto</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- modal -->
+                                            <form action="{% url 'add_productos' %}" method="POST"
+                                                class="formulario-agregar_producto formulario-agregar"
+                                                enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <div>
+                                                    <label for="">Nombre</label>
+                                                    <input type="text" name="nombre" required>
+                                                </div>
+                                                <div>
+                                                    <label for="">Precio</label>
+                                                    <input type="number" name="precio" required>
+                                                </div>
+                                                <div>
+                                                    <label for="">Marca</label>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        required name="id_marca">
+                                                        <option value="">Selecciona</option>
+                                                        {% for marca in marcas %}
+                                                        <option value="{{marca.id}}">{{marca.marca}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="">Especificaciones</label>
+                                                    <input type="text" name="especificaciones" required>
+                                                </div>
+                                                <div>
+                                                    <label for="">Categoria</label>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        required name="id_categoria">
+                                                        <option value="">Selecciona</option>
+                                                        {% for categoria in categorias %}
+                                                        <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="">Descuento</label>
+                                                    <input type="number" name="descuento" required>
+                                                </div>
+                                                <div>
+                                                    <label for="">Descripcion</label>
+                                                    <textarea id="" name="descripcion" required></textarea>
+                                                </div>
+                                                <div>
+                                                    <label for="">Estado</label>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        required name="id_estado">
+                                                        <option value="">Selecciona</option>
+                                                        {% for estado in estados %}
+                                                        <option value="{{estado.id}}">{{estado.estado_producto}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="">Usuario</label>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        required name="id_usuario">
+                                                        <option value="">Selecciona</option>
+                                                        {% for usuario in usuarios %}
+                                                        <option value="{{usuario.id}}">{{usuario.nombre_usuario}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="seleccionar_archivo-form">
+                                                    <label for="">Imagen producto</label>
+                                                    <input type="file" name="image" required>
+                                                </div>
+                                                <div>
+                                                    <button class="hola" type="submit">Agregar</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <label for="">Precio</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Estado</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Marca</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Especificaciones</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Categoria</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Descripcion</label>
-                                        <textarea name="" id="" ></textarea>
-                                    </div>
-                                    <div>
-                                        <label for="">Imagen</label>
-                                        <img src="{% static 'imagenes/no-image.png' %}" alt="">
-                                    </div>
-                                    <div>
-                                        <button class="hola" type="submit">Agregar</button>
-                                    </div>
-                                </form>
-                            </dialog>
+                                </div>
+                            </div>
+                            <!-- final MODAL -->
                             <span class="material-icons-sharp">
                                 menu
                             </span>
@@ -223,234 +275,157 @@
                                 <div class="tWrap__body">
                                     <table class="t-admin">
                                         <tbody>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
+                                            {% for producto in productos %}
+                                            <tr class="td-tr_clientes tr-admin td-admin">
+                                                <td>{{producto.id}}</td>
+                                                <td>{{producto.nombre_producto}}</td>
+                                                <td>{{producto.precio_producto}}</td>
+                                                <td>{{producto.id_estado_producto}}</td>
+                                                <td>{{producto.id_marca}}</td>
+                                                <td>{{producto.especificaciones_producto}}</td>
+                                                <td>{{producto.id_categoria}}</td>
+                                                <td class="botones_table">
+                                                    <button type="button" class="edit-td" data-bs-toggle="modal"
+                                                        data-bs-target="#editModal{{producto.id}}">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </button>
+                                                </td>
+                                                <td class="botones_table"><a
+                                                        href="{% url 'delete_productos' producto.id %}" class="delete-td">
+                                                        <div class="delete-td_div">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </div>
+                                                    </a></td>
                                             </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
-                                            <tr class="td-tr_productos tr-admin td-admin">
-                                                <td>60</td>
-                                                <td>Mouse</td>
-                                                <td>$60.00</td>
-                                                <td>Pendiente</td>
-                                                <td>LogiTech</td>
-                                                <td>12K DPI optico</td>
-                                                <td>Perifericos</td>
-                                                <td><i class="fa-regular fa-pen-to-square"></i></td>
-                                                <td><i class="fa-solid fa-trash"></i></td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
-                                            </tr>
+
+                                            <!-- MODAL EDITAR  -->
+                                            <div class="modal fade" id="editModal{{producto.id}}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar
+                                                                producto</h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- modal -->
+                                                            <form action="{% url 'edit_productos' producto.id %}" method="POST"
+                                                                
+                                                                enctype="multipart/form-data">
+                                                                {% csrf_token %}
+                                                                <div class="formulario-agregar_producto formulario-agregar">
+                                                                    <div>
+                                                                        <label for="">ID</label>
+                                                                        <input type="text" name="id" readonly value="{{producto.id}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Nombre</label>
+                                                                        <input type="text" name="nombre" required value="{{producto.nombre_producto}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Precio</label>
+                                                                        <input type="number" name="precio" required value="{{producto.precio_producto}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Marca</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_marca">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for marca in marcas %}
+                                                                            {% if marca.id == producto.id_marca.id %}
+                                                                            <option value="{{marca.id}}" selected>{{marca.marca}}</option>    
+                                                                            {% else %}   
+                                                                            <option value="{{marca.id}}">{{marca.marca}}
+                                                                            </option>      
+                                                                            {% endif %}
+                                                                            
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Especificaciones</label>
+                                                                        <input type="text" name="especificaciones" required value="{{producto.especificaciones_producto}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Categoria</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_categoria">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for categoria in categorias %}
+                                                                            {% if categoria.id == producto.id_categoria.id %}
+                                                                            <option value="{{categoria.id}}" selected>{{categoria.nombre}}</option>    
+                                                                            {% else %}   
+                                                                            <option value="{{categoria.id}}">{{categoria.nombre}}</option>        
+                                                                            {% endif %}
+                                                                                
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Descuento</label>
+                                                                        <input type="number" name="descuento" required value="{{producto.descuento}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Descripcion</label>
+                                                                        <textarea id="" name="descripcion"
+                                                                            required>{{producto.descripcion_producto}}</textarea>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Estado</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_estado">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for estado in estados %}
+                                                                            {% if estado.id == producto.id_estado_producto.id %}
+                                                                            <option value="{{estado.id}}" selected>{{estado.estado_producto}}</option>    
+                                                                            {% else %}   
+                                                                            <option value="{{estado.id}}">
+                                                                                {{estado.estado_producto}}</option>     
+                                                                            {% endif %}
+                                                                            
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Usuario</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_usuario">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for usuario in usuarios %}
+                                                                            {% if usuario.id == producto.id_usuario.id %}
+                                                                            <option value="{{usuario.id}}" selected>{{usuario.nombre_usuario}}</option>    
+                                                                            {% else %}   
+                                                                            <option value="{{usuario.id}}">
+                                                                                {{usuario.nombre_usuario}}</option> 
+                                                                            {% endif %}
+                                                                            
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    {% if producto.imagen_producto %}
+                                                                    <img class="imagen_tabla" src="{{ producto.imagen_producto.url }}" alt="">
+                                                                    {% endif %}
+                                                                    <div class="seleccionar_archivo-form">
+                                                                        <label for="">Imagen producto</label>
+                                                                        <input type="file" name="image">
+                                                                    </div>
+                                                                    <div>
+                                                                        <button class="hola" type="submit">Agregar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- final MODAL -->
+                                            {% endfor %}
 
                                         </tbody>
                                     </table>
@@ -461,7 +436,7 @@
                 </div>
             </div>
         </main>
-     
+
 
     </div>
 
@@ -474,4 +449,5 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
 </body>
+
 </html>

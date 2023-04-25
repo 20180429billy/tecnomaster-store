@@ -50,7 +50,80 @@ def delete_marcas(request, id_marca):
 #===============================PRODUCTOS====================================
 
 def productos(request):
-    return render(request, "productos.html")
+    productos = Producto.objects.all().order_by("id")
+    categorias = Categoria.objects.all().order_by("id")
+    estados = EstadoProducto.objects.all().order_by("id")
+    marcas = Marcas.objects.all().order_by("id")
+    usuarios = Usuario.objects.all().order_by("id")
+    
+    context = {
+        "productos" : productos,
+        "categorias" : categorias,
+        "estados" : estados,
+        "marcas" : marcas,
+        "usuarios" : usuarios
+    }
+    
+    return render(request, "productos.html", context)
+
+def add_productos(request):
+    
+    if request.method == "POST" and request.FILES["image"]:
+        producto = Producto()
+        id_categoria = request.POST["id_categoria"]
+        producto.id_categoria = Categoria.objects.get(id = id_categoria)
+        producto.nombre_producto = request.POST["nombre"]
+        producto.descripcion_producto = request.POST["descripcion"]
+        producto.precio_producto = request.POST["precio"]
+        producto.imagen_producto = request.FILES["image"]
+        producto.especificaciones_producto = request.POST["especificaciones"]
+        producto.descuento = request.POST["descuento"]
+        id_usuario = request.POST["id_usuario"]
+        id_marca = request.POST["id_marca"]
+        id_estado = request.POST["id_estado"]
+        producto.id_usuario = Usuario.objects.get(id = id_usuario)
+        producto.id_marca = Marcas.objects.get(id = id_marca)
+        producto.id_estado_producto = EstadoProducto.objects.get(id = id_estado)
+        producto.save()
+        return redirect("productos")
+    else:
+        return redirect("productos")
+
+
+def  edit_productos(request, id_producto):
+    producto = Producto.objects.get(id = id_producto)
+    
+    if request.method == "POST":
+        if len(request.FILES) != 0:
+            if len(producto.imagen_producto):
+                os.remove(producto.imagen_producto.path)
+            producto.imagen_producto = request.FILES['image']
+            
+            
+        id_categoria = request.POST["id_categoria"]
+        producto.id_categoria = Categoria.objects.get(id = id_categoria)
+        producto.nombre_producto = request.POST["nombre"]
+        producto.descripcion_producto = request.POST["descripcion"]
+        producto.precio_producto = request.POST["precio"]
+        producto.especificaciones_producto = request.POST["especificaciones"]
+        producto.descuento = request.POST["descuento"]
+        id_usuario = request.POST["id_usuario"]
+        id_marca = request.POST["id_marca"]
+        id_estado = request.POST["id_estado"]
+        producto.id_usuario = Usuario.objects.get(id = id_usuario)
+        producto.id_marca = Marcas.objects.get(id = id_marca)
+        producto.id_estado_producto = EstadoProducto.objects.get(id = id_estado)
+        producto.save()
+        return redirect("productos")
+    else:
+        return redirect("productos")
+    
+def delete_productos(request, id_producto):
+    producto = Producto.objects.get(id = id_producto)
+    producto.delete()
+    return redirect("productos")
+
+
 
 #============================================================================
 #===============================USUARIOS====================================
