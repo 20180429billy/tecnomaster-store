@@ -108,70 +108,18 @@ class ImagenProducto(models.Model):
         return self.imagen_producto
 
 
-def add_usuarios(request):
-    if request.method == "POST":
-        usuario = Usuario()
-        usuario.nombre_usuario = request.POST["nombres"]
-        usuario.apellido_usuario  = request.POST["apellidos"]
-        usuario.correo_usuario = request.POST["correo"]
-        usuario.alias_usuario = request.POST["alias"]
-        usuario.clave_usuario = request.POST["clave"]
-        estado_usuario = request.POST["id_estado_usuario"]
-        tipo_usuario = request.POST["id_tipo_usuario"]
-        usuario.id_estado_usuario = EstadoUsuario.objects.get(id = estado_usuario)
-        usuario.id_tipo_usuario = TipoUsuario.objects.get(id = tipo_usuario)
-        usuario.save()
-        return redirect("usuarios")
-    else:
-        return redirect("usuarios")
+class EstadoPedido(models.Model):
+    estado_pedido = models.CharField(max_length=100)
     
-def add_categorias(request):
-    if request.method == "POST" and request.FILES['image']:
-        categoria = Categoria()
-        categoria.nombre = request.POST["nombre"]
-        categoria.descripcion = request.POST["descripcion"]
-        categoria.image = request.FILES['image']
-        categoria.save()
-        return redirect("categorias")
-    else:
-        return redirect("categorias")
+class Pedido(models.Model):
+    id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    fecha_pedido = models.DateTimeField(auto_now=True)
+    direccion_pedido = models.CharField(max_length=200)
+    id_estado = models.ForeignKey(EstadoPedido, on_delete=models.CASCADE)
+    id_producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
+    precio_pedido = models.IntegerField()
     
-    
-    
-def edit_categorias(request, categoria_id):
-    categoria = Categoria.objects.get(id = categoria_id)
-    
-    if request.method == "POST":
-        if len(request.FILES) != 0:
-            if len(categoria.image):
-                os.remove(categoria.image.path)
-            categoria.image = request.FILES['image']
-        
-        categoria.nombre = request.POST["nombre"]
-        categoria.descripcion = request.POST["descripcion"]
-        categoria.save()
-        return redirect("categorias")
-    else:
-        return redirect("categorias")
-        
-def edit_usuarios(request, id_usuario):
-    usuario = Usuario.objects.get(id = id_usuario)
-
-    if request.method == "POST":
-        
-        usuario.nombre_usuario = request.POST["nombres"]
-        usuario.apellido_usuario  = request.POST["apellidos"]
-        usuario.correo_usuario = request.POST["correo"]
-        usuario.alias_usuario = request.POST["alias"]
-        usuario.clave_usuario = request.POST["clave"]
-        estado_usuario = request.POST["id_estado_usuario"]
-        tipo_usuario = request.POST["id_tipo_usuario"]
-        usuario.id_estado_usuario = EstadoUsuario.objects.get(id = estado_usuario)
-        usuario.id_tipo_usuario = TipoUsuario.objects.get(id = tipo_usuario)
-        usuario.save()
-        return redirect("usuarios")
-    else:
-        return redirect("usuarios")
     
     
     
