@@ -185,7 +185,111 @@ def delete_usuarios(request, id_usuario):
 #===============================VALORACIONES====================================
 
 def valoraciones(request):
-    return render(request, "valoraciones.html") 
+    valoraciones = Valoracion.objects.all().order_by("id")
+    pedidos = Pedido.objects.all().order_by("id")
+    estados = EstadoValoracion.objects.all().order_by("id")
+
+    context = {
+        "valoraciones":valoraciones,
+        "pedidos":pedidos,
+        "estados":estados
+    }
+    return render(request, "valoraciones.html", context) 
+
+def add_valoraciones(request):
+    if request.method == "POST":
+        valoracion = Valoracion()
+        valoracion.calificacion = request.POST["valoracion"]
+        valoracion.comentario = request.POST["comentario"]
+        id_estado = request.POST["id_estado"]
+        
+        id_pedido = request.POST["id_pedido"]
+        valoracion.id_estado = EstadoValoracion.objects.get(id = id_estado)
+        valoracion.id_pedido = Pedido.objects.get(id = id_pedido)
+        valoracion.save()
+        return redirect("valoraciones")
+    else:
+        return redirect("valoraciones")
+
+def edit_valoraciones(request, id_valoracion):
+    valoracion = Valoracion.objects.get(id = id_valoracion)
+
+    if request.method == "POST":
+        
+        valoracion.calificacion = request.POST["valoracion"]
+        valoracion.comentario = request.POST["comentario"]
+        id_estado = request.POST["id_estado"]
+        
+        id_pedido = request.POST["id_pedido"]
+        valoracion.id_estado = EstadoValoracion.objects.get(id = id_estado)
+        valoracion.id_pedido = Pedido.objects.get(id = id_pedido)
+        valoracion.save()
+        return redirect("valoraciones")
+    else:
+        return redirect("valoraciones")
+
+def delete_valoraciones(request, id_valoracion):
+    valoracion = Valoracion.objects.get(id = id_valoracion)
+    valoracion.delete()
+    return redirect("valoraciones")
+
+
+#============================================================================
+#===============================PEDIDOS====================================
+
+def pedidos(request):
+    pedidos = Pedido.objects.all().order_by("id")
+    estados = EstadoPedido.objects.all().order_by("id")
+    clientes = Cliente.objects.all().order_by("id")
+    productos = Producto.objects.all().order_by("id")
+    context = {
+        "pedidos" : pedidos,
+        "estados": estados,
+        "clientes" : clientes,
+        "productos":productos
+    }
+    return render(request, "pedidos.html", context) 
+
+def add_pedidos(request):
+
+    if request.method == "POST":
+        pedido = Pedido()
+        id_cliente = request.POST["id_cliente"]
+        pedido.id_cliente = Cliente.objects.get(id = id_cliente)
+        id_estado = request.POST["id_estado"]
+        pedido.id_estado = EstadoPedido.objects.get(id = id_estado)
+        id_producto = request.POST["id_producto"]
+        pedido.id_producto = Producto.objects.get(id = id_producto)
+        pedido.direccion_pedido = request.POST["direccion"]
+        pedido.cantidad = request.POST["cantidad"]
+        pedido.precio_pedido = request.POST["precio"]
+        pedido.save()
+        return redirect("pedidos")
+    else:
+        return redirect("pedidos")
+
+def edit_pedidos(request, pedido_id):
+    pedido = Pedido.objects.get(id = pedido_id)
+    if request.method == "POST":
+        id_cliente = request.POST["id_cliente"]
+        pedido.id_cliente = Cliente.objects.get(id = id_cliente)
+        id_estado = request.POST["id_estado"]
+        pedido.id_estado = EstadoPedido.objects.get(id = id_estado)
+        id_producto = request.POST["id_producto"]
+        pedido.id_producto = Producto.objects.get(id = id_producto)
+        pedido.direccion_pedido = request.POST["direccion"]
+        pedido.cantidad = request.POST["cantidad"]
+        pedido.precio_pedido = request.POST["precio"]
+        pedido.save()
+        return redirect("pedidos")
+    else:
+        return redirect("pedidos")
+
+def delete_pedidos(request, pedido_id):
+    pedido = Pedido.objects.get(id = pedido_id)
+    pedido.delete()
+    return redirect("pedidos")
+
 
 #=============================================================================
 #===============================CATEGORIAS====================================

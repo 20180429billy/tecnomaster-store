@@ -68,6 +68,10 @@
                     <span class="material-icons-sharp">inventory</span>
                     <h3>Valoraciones</h3>
                 </a>
+                <a href="{% url 'pedidos' %}">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Pedidos</h3>
+                </a>
                 <a href="#">
                     <span class="material-icons-sharp">settings</span>
                     <h3>Ajustes</h3>
@@ -114,12 +118,12 @@
                 <div class="contenido_privado-productos">
                     <div class="descripcion-producto">
                         <div>
-                            <h3>Marcas</h3>
+                            <h3>Pedidos</h3>
                         </div>
                         <div class="agregar-producto-button_access">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
-                                Agregar marca
+                                Agregar pedido
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                             <!-- MODAL  -->
@@ -128,23 +132,60 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar cliente</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar pedido</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <!-- modal -->
-                                            <form action="{% url 'add_marcas' %}" method="POST" enctype="multipart/form-data">
+                                            <form action="{% url 'add_pedidos' %}" method="POST"
+                                                enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <div class="formulario-agregar_marca formulario-agregar">
                                                     <div>
-                                                        <label for="">Marca</label>
-                                                        <input type="text" name="marca">
+                                                        <label for="">Cliente</label>
+                                                        <select class="form-select" aria-label="Default select example"
+                                                            required name="id_cliente">
+                                                            <option value="">Selecciona</option>
+                                                            {% for cliente in clientes %}
+                                                            <option value="{{cliente.id}}">{{cliente.nombres}}</option>
+                                                            {% endfor %}
+                                                        </select>
                                                     </div>
                                                     <div>
-                                                        <label for="">Logo</label>
-                                                        <input type="file" name="image" required>
-                                                    </div>  
+                                                        <label for="">Direccion</label>
+                                                        <input type="text" name="direccion" required>
+                                                    </div>
+                                                    <div>
+                                                        <label for=""> Cantidad</label>
+                                                        <input type="number" name="cantidad" required>
+                                                    </div>
+                                                    <div>
+                                                        <label for=""> Precio pedido</label>
+                                                        <input type="number" name="precio" required>
+                                                    </div>
+                                                    <div>
+                                                        <label for="">Estado pedido</label>
+                                                        <select class="form-select" aria-label="Default select example"
+                                                            required name="id_estado">
+                                                            <option value="">Selecciona</option>
+                                                            {% for estado in estados %}
+                                                            <option value="{{estado.id}}">{{estado.estado_pedido}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label for="">Producto</label>
+                                                        <select class="form-select" aria-label="Default select example"
+                                                            required name="id_producto">
+                                                            <option value="">Selecciona</option>
+                                                            {% for producto in productos %}
+                                                            <option value="{{producto.id}}">{{producto.nombre_producto}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
                                                     <div>
                                                         <button class="hola" type="submit">Agregar</button>
                                                     </div>
@@ -177,10 +218,15 @@
                                 <div class="tWrap__head">
                                     <table class="t-admin">
                                         <thead>
-                                            <tr class="th-tr_marcas tr-admin th-admin">
+                                            <tr class="th-tr_ tr-admin th-admin">
                                                 <th>ID</th>
-                                                <th>Marca</th>
-                                                <th>Logo</th>
+                                                <th>DIreccion</th>
+                                                <th>Cantidad</th>
+                                                <th>Producto</th>
+                                                <th>Precio</th>
+                                                <th>Estado</th>
+                                                <th>Cliente</th>
+                                                <th>Fecha</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -190,20 +236,23 @@
                                 <div class="tWrap__body">
                                     <table class="t-admin">
                                         <tbody>
-                                            {% for marca in marcas %}
-                                            <tr class="td-tr_marcas tr-admin td-admin">
-                                                <td>{{marca.id}}</td>
-                                                <td>{{marca.marca}}</td>
-                                                <td class="imagen_tabla-td">
-                                                    <img class="imagen_tabla" src="{{marca.image.url}}" alt="">
-                                                </td>
+                                            {% for pedido in pedidos %}
+                                            <tr class="td-tr_ tr-admin td-admin">
+                                                <td>{{pedido.id}}</td>
+                                                <td>{{pedido.direccion_pedido}}</td>
+                                                <td>{{pedido.cantidad}}</td>
+                                                <td>{{pedido.id_producto}}</td>
+                                                <td>{{pedido.precio_pedido}}</td>
+                                                <td>{{pedido.id_estado}}</td>
+                                                <td>{{pedido.id_cliente}}</td>
+                                                <td>{{pedido.fecha_pedido}}</td>
                                                 <td class="botones_table">
                                                     <button type="button" class="edit-td" data-bs-toggle="modal"
-                                                        data-bs-target="#editModal{{marca.id}}">
+                                                        data-bs-target="#editModal{{pedido.id}}">
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                     </button>
                                                 </td>
-                                                <td class="botones_table"><a href="{% url 'delete_marcas' marca.id %}"
+                                                <td class="botones_table"><a href="{% url 'delete_pedidos' pedido.id %}"
                                                         class="delete-td">
                                                         <div class="delete-td_div">
                                                             <i class="fa-solid fa-trash"></i>
@@ -211,32 +260,85 @@
                                                     </a></td>
                                             </tr>
                                             <!-- MODAL editar  -->
-                                            <div class="modal fade" id="editModal{{marca.id}}" tabindex="-1"
+                                            <div class="modal fade" id="editModal{{pedido.id}}" tabindex="-1"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar
-                                                                cliente</h1>
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar
+                                                                pedido</h1>
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <!-- modal -->
-                                                            <form action="{% url 'edit_marcas' marca.id %}" method="POST" enctype="multipart/form-data">
+                                                            <form action="{% url 'edit_pedidos' pedido.id %}"
+                                                                method="POST" enctype="multipart/form-data">
                                                                 {% csrf_token %}
-                                                                <div class="formulario-agregar_marca formulario-agregar">
-                                                                    
+                                                                <div
+                                                                    class="formulario-agregar_marca formulario-agregar">
                                                                     <div>
-                                                                        <label for="">Marca</label>
-                                                                        <input type="text" name="marca" value="{{marca.marca}}">
+                                                                        <label for="">Cliente</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_cliente">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for cliente in clientes %}
+                                                                            {% if cliente.id == pedido.id_cliente.id %}
+                                                                                        <option value="{{cliente.id}}" selected>{{cliente.nombres}}</option>    
+                                                                                    {% else %}   
+                                                                                    <option value="{{cliente.id}}">
+                                                                                        {{cliente.nombres}}</option>                                                                              
+                                                                                    {% endif %}
+                                                                            
+                                                                            {% endfor %}
+                                                                        </select>
                                                                     </div>
-                                                                    {% if marca.image %}
-                                                                    <img class="imagen_tabla" src="{{ marca.image.url }}" alt="">
-                                                                    {% endif %}
                                                                     <div>
-                                                                        <label for="">Logo</label>
-                                                                        <input type="file" name="image">
+                                                                        <label for="">Direccion</label>
+                                                                        <input type="text" name="direccion" required value="{{pedido.direccion_pedido}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for=""> Cantidad</label>
+                                                                        <input type="number" name="cantidad" required value="{{pedido.cantidad}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for=""> Precio pedido</label>
+                                                                        <input type="number" name="precio" required value="{{pedido.precio_pedido}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Estado pedido</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_estado">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for estado in estados %}
+                                                                            {% if estado.id == pedido.id_estado.id %}
+                                                                                        <option value="{{estado.id}}" selected>{{estado.estado_pedido}}</option>    
+                                                                                    {% else %}   
+                                                                                    <option value="{{estado.id}}">
+                                                                                        {{estado.estado_pedido}}</option>                                                                             
+                                                                                    {% endif %}
+                                                                            
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Producto</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_producto">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for producto in productos %}
+                                                                            {% if producto.id == pedido.id_producto.id %}
+                                                                                        <option value="{{producto.id}}" selected>{{producto.nombre_producto}}</option>    
+                                                                                    {% else %}   
+                                                                                    <option value="{{producto.id}}">
+                                                                                        {{producto.nombre_producto}}</option>                                                                            
+                                                                                    {% endif %}
+                                                                            
+                                                                            {% endfor %}
+                                                                        </select>
                                                                     </div>
                                                                     <div>
                                                                         <button class="hola"

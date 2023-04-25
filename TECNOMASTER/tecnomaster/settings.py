@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "tecnomaster_store",
         "USER": "postgres",
-        'PASSWORD': '1234',
+        'PASSWORD': 'root',
         "HOST": "localhost",
         "PORT": "5432", 
     }

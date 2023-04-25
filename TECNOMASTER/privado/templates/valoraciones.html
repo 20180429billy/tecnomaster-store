@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="es">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 </head>
- 
+
 <body>
     <div class="container-productos">
         <!-- Menu desplegable de la parte izquieda del sitio privado -->
@@ -67,6 +67,10 @@
                 <a href="{% url 'valoraciones' %}" class="active">
                     <span class="material-icons-sharp">inventory</span>
                     <h3>Valoraciones</h3>
+                </a>
+                <a href="{% url 'pedidos' %}">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Pedidos</h3>
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">settings</span>
@@ -118,41 +122,65 @@
                             <h3>Valoraciones</h3>
                         </div>
                         <div class="agregar-producto-button_access">
-                            <a id="btn-abrir-modal">
-                                Agregar Valoracion
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Agregar valoracion
                                 <i class="fa-solid fa-plus"></i>
-
-                            </a>
-                            <dialog id="modal">
-                                <h3>Crear Valoracion</h3>
-                                <form action="" method="dialog" class="formulario-agregar_usuario formulario-agregar">
-                                    <div>
-                                        <label for="">Nombre del producto</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Cliente</label>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <label for="">Comentario</label>
-                                        <textarea name="" id=""></textarea>
-                                    </div>
-                                    <div>
-                                        <label for="">Valoracion</label>
-                                        <div>
-                                            <span class="fa fa-star checked_rating"></span>
-                                            <span class="fa fa-star checked_rating"></span>
-                                            <span class="fa fa-star checked_rating"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
+                            </button>
+                            <!-- MODAL  -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar valoracion</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- modal -->
+                                            <form action="{% url 'add_valoraciones'%}" method="POST"
+                                                class="formulario-agregar_usuario formulario-agregar">
+                                                {% csrf_token %}
+                                                <div>
+                                                    <label for="">Pedido</label>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        required name="id_pedido">
+                                                        <option value="">Selecciona</option>
+                                                        {% for pedido in pedidos %}
+                                                        <option value="{{pedido.id}}">{{pedido.id_producto}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="">Estado pedido</label>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        required name="id_estado">
+                                                        <option value="">Selecciona</option>
+                                                        {% for estado in estados %}
+                                                        <option value="{{estado.id}}">{{estado.estado_valoracion}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label for="">Comentario</label>
+                                                    <textarea name="comentario" id=""></textarea>
+                                                </div>
+                                                <div>
+                                                    <label for="">Valoracion</label>
+                                                    <input type="number" required max="5" min="0"
+                                                        name="valoracion">
+                                                </div>
+                                                <div>
+                                                    <button class="hola" type="submit">Agregar</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                    <div>
-                                        <button class="hola" type="submit">Agregar</button>
-                                    </div>
-                                </form>
-                            </dialog>
+                                </div>
+                            </div>
+                            <!-- final MODAL -->
                             <span class="material-icons-sharp">
                                 menu
                             </span>
@@ -176,10 +204,11 @@
                                         <thead>
                                             <tr class="th-tr_valoracion tr-admin th-admin">
                                                 <th>ID</th>
-                                                <th>Producto</th>
-                                                <th>Cliente</th>
+                                                <th>pedido</th>
+                                                <th>calificacion</th>
                                                 <th>Comentario</th>
-                                                <th>Valoracion</th>
+                                                <th>fecha</th>
+                                                <th>id_estado</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -188,21 +217,103 @@
                                 <div class="tWrap__body">
                                     <table class="t-admin">
                                         <tbody>
+                                            {% for valoracion in valoraciones %}
                                             <tr class="td-tr_valoracion tr-admin td-admin">
-                                                <td>1</td>
-                                                <td>Laptops 30</td>
-                                                <td>Billy Cañas</td>
-                                                <td>Una muy buena laptop en relacion calidad-precio, no presenta ningun
-                                                    problema</td>
-                                                <td>
-                                                    <span class="fa fa-star checked_rating"></span>
-                                                    <span class="fa fa-star checked_rating"></span>
-                                                    <span class="fa fa-star checked_rating"></span>
-                                                    <span class="fa fa-star"></span>
-                                                    <span class="fa fa-star"></span>
+                                                <td>{{valoracion.id}}</td>
+                                                <td>{{valoracion.id_pedido}}</td>
+                                                <td>{{valoracion.calificacion}}</td>
+                                                <td>{{valoracion.comentario}}</td>
+                                                <td>{{valoracion.fecha}}</td>
+                                                <td>{{valoracion.id_estado}}</td>
+                                                <td class="botones_table">
+                                                    <button type="button" class="edit-td" data-bs-toggle="modal"
+                                                        data-bs-target="#editModal{{valoracion.id}}">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </button>
                                                 </td>
-                                                <td><i class="fa-solid fa-bars"></i></td>
+                                                <td class="botones_table"><a
+                                                        href="{% url 'delete_valoraciones' valoracion.id %}"
+                                                        class="delete-td">
+                                                        <div class="delete-td_div">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </div>
+                                                    </a></td>
                                             </tr>
+                                            <!-- MODAL editar -->
+                                            <div class="modal fade" id="editModal{{valoracion.id}}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar
+                                                                valoracion</h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- modal -->
+                                                            <form action="{% url 'edit_valoraciones' valoracion.id %}" method="POST">
+                                                                {% csrf_token %}
+                                                                <div class="formulario-agregar_usuario formulario-agregar">
+                                                                    <div>
+                                                                        <label for="">ID</label>
+                                                                        <input type="text" readonly value="{{valoracion.id}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Pedido</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_pedido">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for pedido in pedidos %}
+                                                                            {% if pedido.id == valoracion.id_pedido.id %}
+                                                                                        <option value="{{pedido.id}}" selected>{{pedido.id_producto}}</option>    
+                                                                                    {% else %}   
+                                                                                    <option value="{{pedido.id}}">
+                                                                                        {{pedido.id_producto}}</option>                                                                            
+                                                                                    {% endif %}
+                                                                            
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Estado pedido</label>
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example" required
+                                                                            name="id_estado">
+                                                                            <option value="">Selecciona</option>
+                                                                            {% for estado in estados %}
+                                                                            {% if estado.id == valoracion.id_estado.id %}
+                                                                                        <option value="{{estado.id}}" selected>{{estado.estado_valoracion}}</option>    
+                                                                                    {% else %}   
+                                                                                    <option value="{{estado.id}}">
+                                                                                        {{estado.estado_valoracion}}</option>                                                                          
+                                                                                    {% endif %}
+                                                                            
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Comentario</label>
+                                                                        <textarea name="comentario" id="">{{valoracion.comentario}}</textarea>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="">Valoracion</label>
+                                                                        <input type="number" required maxlength="5"
+                                                                            minlength="0" name="valoracion" value="{{valoracion.calificacion}}">
+                                                                    </div>
+                                                                    <div>
+                                                                        <button class="hola" type="submit">Agregar</button>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- final MODAL -->
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div> <!--/.tWrap__body-->
@@ -215,7 +326,7 @@
 
 
     </div>
- 
+
     <!-- Ultima seccion del documento destinada para los enlaces a los archivos externos de JAVASCRIPT -->
 
     <script src="{% static 'js/index.js' %}"></script>

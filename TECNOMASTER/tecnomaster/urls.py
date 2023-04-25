@@ -37,7 +37,10 @@ urlpatterns = [
     path("delete_usuarios/<int:id_usuario>", views.delete_usuarios, name="delete_usuarios"),   
     
     ################################################################# 
-    path("valoraciones/", views.valoraciones, name="valoraciones"),
+    path("valoraciones", views.valoraciones, name="valoraciones"),
+    path("add_valoraciones/", views.add_valoraciones, name="add_valoraciones"),
+    path("edit_valoraciones/<int:id_valoracion>", views.edit_valoraciones, name="edit_valoraciones"),
+    path("delete_valoraciones/<int:id_valoracion>", views.delete_valoraciones, name="delete_valoraciones"),
     
     #################################################################
     path("categorias/", views.categorias, name="categorias"),
@@ -47,6 +50,13 @@ urlpatterns = [
     
     #################################################################
     path("dashboard/", views.dashboard, name="dashboard"),
+    
+    #################################################################
+    path("pedidos/", views.pedidos, name="pedidos"),
+    path("add_pedidos/", views.add_pedidos, name="add_pedidos"),
+    path("edit_pedidos/<int:pedido_id>", views.edit_pedidos, name="edit_pedidos"),
+    path("delete_pedidos/<int:pedido_id>", views.delete_pedidos, name="delete_pedidos"),
+
     
     #################################################################
     path("", views.index, name="index"),

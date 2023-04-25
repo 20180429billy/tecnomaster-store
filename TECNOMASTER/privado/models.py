@@ -110,15 +110,39 @@ class ImagenProducto(models.Model):
 
 class EstadoPedido(models.Model):
     estado_pedido = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.estado_pedido
     
 class Pedido(models.Model):
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    fecha_pedido = models.DateTimeField(auto_now=True)
+    fecha_pedido = models.DateTimeField(auto_now=True, null=True, blank=True)
     direccion_pedido = models.CharField(max_length=200)
     id_estado = models.ForeignKey(EstadoPedido, on_delete=models.CASCADE)
     id_producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
     precio_pedido = models.IntegerField()
+
+    def __str__(self):
+        return self.direccion_pedido
+
+class EstadoValoracion(models.Model):
+    estado_valoracion = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.estado_valoracion
+
+class Valoracion(models.Model):
+    id_pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, default="")
+    calificacion = models.IntegerField()
+    comentario = models.CharField(max_length=250)
+    fecha = models.DateTimeField(auto_now=True)
+    id_estado = models.ForeignKey(EstadoValoracion, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.comentario
+
+    
     
     
     
