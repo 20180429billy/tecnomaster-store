@@ -56,7 +56,6 @@ urlpatterns = [
     path("add_pedidos/", views.add_pedidos, name="add_pedidos"),
     path("edit_pedidos/<int:pedido_id>", views.edit_pedidos, name="edit_pedidos"),
     path("delete_pedidos/<int:pedido_id>", views.delete_pedidos, name="delete_pedidos"),
-
     
     #################################################################
     path("", views.index, name="index"),
@@ -66,6 +65,10 @@ urlpatterns = [
     path("add_cliente/", views.add_cliente, name="add_cliente"),
     path("edit_cliente/<int:cliente_id>", views.edit_cliente, name="edit_cliente"),
     path("delete_cliente/<int:cliente_id>", views.delete_cliente, name="delete_cliente")
+    
+    #################################################################
+    #PUBLICO
+    #################################################################
     
 ]
 

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'privado'
+    'privado',
+    'publico'
 ]
 
 MIDDLEWARE = [
@@ -80,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "tecnomaster_store",
         "USER": "postgres",
-        'PASSWORD': 'root',
+        'PASSWORD': '1234',
         "HOST": "localhost",
         "PORT": "5432", 
     }
