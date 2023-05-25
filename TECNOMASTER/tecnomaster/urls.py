@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path
-from privado import views  
+from privado import views 
+from publico import views as publico 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,7 +42,7 @@ urlpatterns = [
     path("add_valoraciones/", views.add_valoraciones, name="add_valoraciones"),
     path("edit_valoraciones/<int:id_valoracion>", views.edit_valoraciones, name="edit_valoraciones"),
     path("delete_valoraciones/<int:id_valoracion>", views.delete_valoraciones, name="delete_valoraciones"),
-    
+     
     #################################################################
     path("categorias/", views.categorias, name="categorias"),
     path("add_categorias/", views.add_categorias, name="add_categorias"),
@@ -64,11 +65,34 @@ urlpatterns = [
     path("clientes", views.clientes, name="clientes"),
     path("add_cliente/", views.add_cliente, name="add_cliente"),
     path("edit_cliente/<int:cliente_id>", views.edit_cliente, name="edit_cliente"),
-    path("delete_cliente/<int:cliente_id>", views.delete_cliente, name="delete_cliente")
+    path("delete_cliente/<int:cliente_id>", views.delete_cliente, name="delete_cliente"),
     
     #################################################################
     #PUBLICO
     #################################################################
+    
+    path("carrito_pagina", publico.carrito_pagina, name="carrito_pagina"),
+    #############################################
+    path("categorias_pagina", publico.categorias_pagina, name="categorias_pagina"),
+    #############################################
+    path("detalle_producto_pagina", publico.detalle_producto_pagina, name="detalle_producto_pagina"),
+    #############################################
+    path("index_pagina", publico.index_pagina, name="index_pagina"),
+    #############################################
+    path("inicio_sesion_pagina", publico.inicio_sesion_pagina, name="inicio_sesion_pagina"),
+    #############################################
+    path("marcas_pagina", publico.marcas_pagina, name="marcas_pagina"),
+    #############################################
+    path("productos_nuevos_pagina", publico.productos_nuevos_pagina, name="productos_nuevos_pagina"),
+    #############################################
+    path("productos_ofertas_pagina", publico.productos_ofertas_pagina, name="productos_ofertas_pagina"),
+    #############################################
+    path("productos-categoria_pagina", publico.productos_categoria_pagina, name="productos-categoria_pagina"),
+    #############################################
+    path("sobre_nosotros_pagina", publico.sobre_nosotros_pagina, name="sobre_nosotros_pagina"),
+    #############################################
+    path("ultimas_compras_pagina", publico.ultimas_compras_pagina, name="ultimas_compras_pagina"),
+    #############################################
     
 ]
 
