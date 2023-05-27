@@ -59,7 +59,7 @@ urlpatterns = [
     path("delete_pedidos/<int:pedido_id>", views.delete_pedidos, name="delete_pedidos"),
     
     #################################################################
-    path("", views.index, name="index"),
+    path("login", views.index, name="index"),
     
     #################################################################
     path("clientes", views.clientes, name="clientes"),
@@ -77,7 +77,7 @@ urlpatterns = [
     #############################################
     path("detalle_producto_pagina", publico.detalle_producto_pagina, name="detalle_producto_pagina"),
     #############################################
-    path("index_pagina", publico.index_pagina, name="index_pagina"),
+    path("", publico.index_pagina, name="index_pagina"),
     #############################################
     path("inicio_sesion_pagina", publico.inicio_sesion_pagina, name="inicio_sesion_pagina"),
     #############################################
@@ -93,6 +93,7 @@ urlpatterns = [
     #############################################
     path("ultimas_compras_pagina", publico.ultimas_compras_pagina, name="ultimas_compras_pagina"),
     #############################################
+   
     
 ]
 
