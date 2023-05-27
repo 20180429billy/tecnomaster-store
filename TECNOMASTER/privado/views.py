@@ -5,7 +5,7 @@ from .models import *
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
-#get_object_or_404
+#get_object_or_404 
 
 #===============================MARCAS====================================
 
