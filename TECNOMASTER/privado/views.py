@@ -185,9 +185,9 @@ def delete_usuarios(request, id_usuario):
 #===============================VALORACIONES====================================
 
 def valoraciones(request):
-    valoraciones = Valoracion.objects.all().order_by("id")
+    valoraciones = Valoraciones.objects.all().order_by("id")
     pedidos = Pedido.objects.all().order_by("id")
-    estados = EstadoValoracion.objects.all().order_by("id")
+    estados = EstadoValoraciones.objects.all().order_by("id")
 
     context = {
         "valoraciones":valoraciones,
@@ -198,13 +198,13 @@ def valoraciones(request):
 
 def add_valoraciones(request):
     if request.method == "POST":
-        valoracion = Valoracion()
+        valoracion = Valoraciones()
         valoracion.calificacion = request.POST["valoracion"]
         valoracion.comentario = request.POST["comentario"]
         id_estado = request.POST["id_estado"]
         
         id_pedido = request.POST["id_pedido"]
-        valoracion.id_estado = EstadoValoracion.objects.get(id = id_estado)
+        valoracion.id_estado = EstadoValoraciones.objects.get(id = id_estado)
         valoracion.id_pedido = Pedido.objects.get(id = id_pedido)
         valoracion.save()
         return redirect("valoraciones")
@@ -212,7 +212,7 @@ def add_valoraciones(request):
         return redirect("valoraciones")
 
 def edit_valoraciones(request, id_valoracion):
-    valoracion = Valoracion.objects.get(id = id_valoracion)
+    valoracion = Valoraciones.objects.get(id = id_valoracion)
 
     if request.method == "POST":
         
@@ -221,7 +221,7 @@ def edit_valoraciones(request, id_valoracion):
         id_estado = request.POST["id_estado"]
         
         id_pedido = request.POST["id_pedido"]
-        valoracion.id_estado = EstadoValoracion.objects.get(id = id_estado)
+        valoracion.id_estado = EstadoValoraciones.objects.get(id = id_estado)
         valoracion.id_pedido = Pedido.objects.get(id = id_pedido)
         valoracion.save()
         return redirect("valoraciones")
@@ -229,7 +229,7 @@ def edit_valoraciones(request, id_valoracion):
         return redirect("valoraciones")
 
 def delete_valoraciones(request, id_valoracion):
-    valoracion = Valoracion.objects.get(id = id_valoracion)
+    valoracion = Valoraciones.objects.get(id = id_valoracion)
     valoracion.delete()
     return redirect("valoraciones")
 

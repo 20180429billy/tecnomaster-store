@@ -1,7 +1,7 @@
 {% load static%}
 
 <!doctype html>
-<html lang="es">
+<html lang="es"> 
  
 <head>
     <meta charset="utf-8">
@@ -197,11 +197,11 @@
             </a>
         </div>
         <div class="nav-categorias_link">
-            <a href="{% url 'productos-categoria_pagina' %}">
+            <a href="{% url 'productos-categoria_pagina' 1 %}">
                 <span class="material-icons-sharp">
                     headphones
                 </span>
-                <a class="link-nav_categorias" href="{% url 'productos-categoria_pagina' %}">Gaming</a>
+                <a class="link-nav_categorias" href="{% url 'productos-categoria_pagina' 1 %}">Gaming</a>
             </a>
         </div>
         <div class="nav-categorias_link">
@@ -220,30 +220,12 @@
         <h3 class="categoria_titulo">Categorias</h3>
         <div class="categorias-1"> 
             <div class="categorias">
-                <div class="categoria-2">
-                    <img src="{% static 'imagenes/gaming_laptops.png' %}" alt="">
-                    <p>Gaming Laptops</p>
-                </div>
-                <div class="categoria-2">
-                    <img src="{% static 'imagenes/gaming_laptops.png' %}" alt="">
-                    <p>Gaming Laptops</p>
-                </div>
-                <div class="categoria-2">
-                    <img src="{% static 'imagenes/gaming_laptops.png' %}" alt="">
-                    <p>Gaming Laptops</p>
-                </div>
-                <div class="categoria-2">
-                    <img src="{% static 'imagenes/gaming_laptops.png' %}" alt="">
-                    <p>Gaming Laptops</p>
-                </div>
-                <div class="categoria-2">
-                    <img src="{% static 'imagenes/gaming_laptops.png' %}" alt="">
-                    <p>Gaming Laptops</p>
-                </div>
-                <div class="categoria-2">
-                    <img src="{% static 'imagenes/gaming_laptops.png' %}" alt="">
-                    <p>Gaming Laptops</p>
-                </div>
+                {% for categoria in categorias %}
+                    <div class="categoria-2">
+                        <img class="" src="{{ categoria.image.url }}" alt="">
+                        <a href="{% url 'productos-categoria_pagina' categoria.id %}">{{ categoria.nombre }}</a>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </main>

@@ -1,19 +1,61 @@
-from django.shortcuts import render
+import os
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from privado.models import *
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
-def carrito_pagina(request):
-    return render(request, "carrito_pagina.html")
+def carrito_pagina(request, id_producto):
+    productos = Producto.objects.get(id = id_producto)
+    return render(request, "carrito_pagina.html",{
+        'productos':productos
+    })
+
+####################################################################
+
+def productos_categoria_pagina(request, categoria_id):
+    categoria = Categoria.objects.get(id = categoria_id)
+    productos = Producto.objects.filter(id_categoria = categoria_id)
+    marca = Marcas.objects.all()
+    
+    return render(request, "productos-categoria_pagina.html", {
+        'productos' : productos,
+        'marca': marca,
+        'categoria' : categoria
+    })
 
 ####################################################################
 
 def categorias_pagina(request):
-    return render(request, "categorias_pagina.html")
+    categorias = Categoria.objects.all().order_by("id")
+    return render(request, "categorias_pagina.html", {
+        "categorias" : categorias
+    })
 
 ####################################################################
 
-def detalle_producto_pagina(request):
-    return render(request, "detalle_producto_pagina.html")
+def detalle_producto_pagina(request, producto_id):
+    productos = Producto.objects.get(id = producto_id)
+    valoraciones = Valoraciones.objects.filter(id_producto = producto_id)
+    return render(request, "detalle_producto_pagina.html", {
+        'productos': productos,
+        'valoraciones' : valoraciones
+    })
+
+####################################################################
+
+def add_valoracion(request, id_producto):
+    if request.method == "POST":
+        valoracion = Valoraciones()
+        valoracion.calificacion = request.POST["valoracion"]
+        valoracion.comentario = request.POST["comentario"]
+        valoracion.id_producto = Producto.objects.get(id = id_producto)
+
+        valoracion.save()
+        return redirect("detalle_producto_pagina",id_producto)
+    else:
+        return redirect("detalle_producto_pagina",id_producto)
 
 ####################################################################
 
@@ -40,10 +82,7 @@ def productos_nuevos_pagina(request):
 def productos_ofertas_pagina(request):
     return render(request, "productos_ofertas_pagina.html")
 
-####################################################################
 
-def productos_categoria_pagina(request):
-    return render(request, "productos-categoria_pagina.html")
 
 ####################################################################
 

@@ -53,7 +53,7 @@
 
             <label for="btn-navbar">
                 <div class="carrito">
-                    <a  class="navbar-enlace" href="{% url 'carrito_pagina' %}">
+                    <a  class="navbar-enlace" href="{% url 'carrito_pagina' 1%}">
                         <span class="material-icons-sharp">
                             shopping_cart
                         </span>
@@ -196,11 +196,11 @@
             </a>
         </div>
         <div class="nav-categorias_link">
-            <a href="{% url 'productos-categoria_pagina' %}">
+            <a href="{% url 'productos-categoria_pagina' 1%}">
                 <span class="material-icons-sharp">
                     headphones
                 </span>
-                <a class="link-nav_categorias" href="{% url 'productos-categoria_pagina' %}">Gaming</a>
+                <a class="link-nav_categorias" href="{% url 'productos-categoria_pagina' 1 %}">Gaming</a>
             </a>
         </div>
         <div class="nav-categorias_link">

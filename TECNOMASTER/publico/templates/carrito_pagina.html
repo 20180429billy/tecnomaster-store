@@ -52,7 +52,7 @@
 
             <label for="btn-navbar">
                 <div class="carrito">
-                    <a  class="navbar-enlace" href="{% url 'carrito_pagina' %}">
+                    <a  class="navbar-enlace" href="{% url 'carrito_pagina' 1 %}">
                         <span class="material-icons-sharp">
                             shopping_cart
                         </span>
@@ -195,11 +195,11 @@
             </a>
         </div>
         <div class="nav-categorias_link">
-            <a href="{% url 'productos-categoria_pagina' %}">
+            <a href="{% url 'productos-categoria_pagina' 1 %}">
                 <span class="material-icons-sharp">
                     headphones
                 </span>
-                <a class="link-nav_categorias" href="{% url 'productos-categoria_pagina' %}">Gaming</a>
+                <a class="link-nav_categorias" href="{% url 'productos-categoria_pagina' 1 %}">Gaming</a>
             </a>
         </div>
         <div class="nav-categorias_link">
@@ -218,47 +218,13 @@
         <h3 class="carrito_titulo">Mi carrito</h3>
         <div class="carrito-container">
             <div class="compra_carrito">
-                <img src="{% static 'imagenes/laptops_gamer.1.2.png' %}" alt="">
-                <p class="nombre_producto-carrito">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_producto-carrito">$1500.00</p>
-                <input type="number">
-                <p class="precio_producto-carrito">$3000.00</p>
-                <span class="material-icons-sharp">
-                    delete
-                </span>
-            </div>
-            <div class="compra_carrito">
-                <img src="{% static 'imagenes/laptops_gamer.1.2.png' %}" alt="">
-                <p class="nombre_producto-carrito">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_producto-carrito">$1500.00</p>
-                <input type="number">
-                <p class="precio_producto-carrito">$3000.00</p>
-                <span class="material-icons-sharp">
-                    delete
-                </span>
-            </div>
-            <div class="compra_carrito">
-                <img src="{% static 'imagenes/laptops_gamer.1.2.png' %}" alt="">
-                <p class="nombre_producto-carrito">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_producto-carrito">$1500.00</p>
-                <input type="number">
-                <p class="precio_producto-carrito">$3000.00</p>
-                <span class="material-icons-sharp">
-                    delete
-                </span>
-            </div>
-            <div class="compra_carrito">
-                <img src="{% static 'imagenes/laptops_gamer.1.2.png' %}" alt="">
-                <p class="nombre_producto-carrito">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_producto-carrito">$1500.00</p>
-                <input type="number">
-                <p class="precio_producto-carrito">$3000.00</p>
-                <span class="material-icons-sharp">
-                    delete
-                </span>
+                <img src="{{ productos.imagen_producto.url }}" alt="">
+                <p class="nombre_producto-carrito">{{productos.nombre_producto}}</p>
+                <p class="precio_producto-carrito precio_producto_carrito">{{productos.precio_producto}}</p>
+                <input type="number" class="cantidad_producto">
             </div>
             <div class="total">
-                <p>Total: <span>$1000.00</span></p>
+                <p>Total: <span class="total_compra">{{productos.precio_producto}}</span></p>
                 <div class="finalizar-compra">
                     <span class="material-icons-sharp">
                         credit_card
@@ -400,6 +366,7 @@
     <!-- ultima seccion de la pagina, para enlazar los archivos externos de javascript -->
 
     <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/carrito.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
