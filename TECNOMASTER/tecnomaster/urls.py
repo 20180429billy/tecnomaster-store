@@ -71,11 +71,11 @@ urlpatterns = [
     #PUBLICO
     #################################################################
     
-    path("carrito_pagina", publico.carrito_pagina, name="carrito_pagina"),
+    path("carrito_pagina/<int:id_producto>", publico.carrito_pagina, name="carrito_pagina"),
     #############################################
     path("categorias_pagina", publico.categorias_pagina, name="categorias_pagina"),
     #############################################
-    path("detalle_producto_pagina", publico.detalle_producto_pagina, name="detalle_producto_pagina"),
+    path("detalle_producto_pagina/<int:producto_id>", publico.detalle_producto_pagina, name="detalle_producto_pagina"),
     #############################################
     path("", publico.index_pagina, name="index_pagina"),
     #############################################
@@ -87,12 +87,14 @@ urlpatterns = [
     #############################################
     path("productos_ofertas_pagina", publico.productos_ofertas_pagina, name="productos_ofertas_pagina"),
     #############################################
-    path("productos-categoria_pagina", publico.productos_categoria_pagina, name="productos-categoria_pagina"),
+    path("productos-categoria_pagina/<int:categoria_id>", publico.productos_categoria_pagina, name="productos-categoria_pagina"),
     #############################################
     path("sobre_nosotros_pagina", publico.sobre_nosotros_pagina, name="sobre_nosotros_pagina"),
     #############################################
     path("ultimas_compras_pagina", publico.ultimas_compras_pagina, name="ultimas_compras_pagina"),
     #############################################
+    path("add_valoracion/<int:id_producto>", publico.add_valoracion, name="add_valoracion"),
+
    
     
 ]

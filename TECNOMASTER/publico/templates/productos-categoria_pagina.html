@@ -1,7 +1,7 @@
 {%load static%}
 <!doctype html>
 <html lang="es">
- 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,7 +53,7 @@
 
             <label for="btn-navbar">
                 <div class="carrito">
-                    <a  class="navbar-enlace" href="{% url 'carrito_pagina' %}">
+                    <a class="navbar-enlace" href="{% url 'carrito_pagina' %}">
                         <span class="material-icons-sharp">
                             shopping_cart
                         </span>
@@ -196,11 +196,11 @@
             </a>
         </div>
         <div class="nav-categorias_link">
-            <a href="{% url 'productos-categoria_pagina' %}">
+            <a href="{% url 'productos-categoria_pagina' 1 %}">
                 <span class="material-icons-sharp">
                     headphones
                 </span>
-                <a class="link-nav_categorias" href="{% url 'productos-categoria_pagina' %}">Gaming</a>
+                <a class="link-nav_categorias" href="{% url 'productos-categoria_pagina' 1 %}">Gaming</a>
             </a>
         </div>
         <div class="nav-categorias_link">
@@ -214,201 +214,22 @@
     </div>
 
     <!-- parte principal del sitio donde se visualiza toda la informacion de la pagina -->
-    <main class="contenedor_categoria_productos">
-        <div class="filter">
-            <div class="filtrar-type">
-                <h6>Marca</h6>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Asus
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Dell
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        HP
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Lenovo
-                    </label>
-                </div>
-            </div>
-            <div class="filtrar-type">
-                <h6>Procesador</h6>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Intel Celeron
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Intel core i3
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Intel core i5
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Intel core i7
-                    </label>
-                </div>
-            </div>
-            <div class="filtrar-type">
-                <h6>RAM</h6>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        8GB
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        12GB
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        16GB
-                    </label>
-                </div>
-            </div>
-            <div class="filtrar-type">
-                <h6>Almacenamiento</h6>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        250GB
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        500GB
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        1TB 
-                    </label>
-                </div>
-            </div>
-            
-            <div class="filtrar-type">
-                <h6>Precio</h6>
-                <input type="range" min="-10" max="10" class="range-precio">
-            </div>
+    <main class="contenedor">
+        <div class="titulo">
+            <h2>{{categoria.nombre}}</h2>
         </div>
-        <div class="productos-categoria">
-            <h2>Laptops gaming</h2>
-            <div class="cards_producto-categoria">
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-                <div class="card_producto-categoria">   
-                    <img src="{% static 'imagenes/laptops_gamer.png' %}" alt="">
-                    <h3>HP</h3>
-                    <p>Laptops gaming HP 15.6" FX517ZC-HN004W</p>
-                    <p class="descuento">Hasta en un -40%</p>
-                    <a class="ver-detalles" href="{% url 'detalle_producto_pagina' %}">Ver detalles</a>
-                </div>
-
+        <div class="cards_producto-nuevos">
+            {% for producto in productos %}
+            <div class="card-nuevo">
+                <img src="{{producto.imagen_producto.url}}" alt="">
+                <h3>{{marca.marca}}</h3>
+                <p>{{producto.nombre_producto}}</p>
+                <p class="descuento">Hasta en un -{{producto.descripcion_producto}}%</p>
+                <a class="ver-detalles" href="{% url 'detalle_producto_pagina' producto.id %}">Ver detalles</a>
             </div>
-        </div>
+            {% endfor %}
 
+        </div>
     </main>
 
 

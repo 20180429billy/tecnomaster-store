@@ -248,6 +248,10 @@ footer {
     margin-top: 60px;
 }
 
+.titulo{
+    margin: 25px;
+}
+
 .titulos_pagina_cont {
     width: 100%;
 }
@@ -287,7 +291,7 @@ footer {
 
 .producto_general {
     display: grid;
-    grid-template-columns: 1.5fr 6fr 7fr;
+    grid-template-columns:6fr 7fr;
     gap: 20px;
     padding-bottom: 30px;
     border-bottom: 1px solid rgb(130, 130, 130);
@@ -295,7 +299,7 @@ footer {
 }
 
 .imagenes_producto {
-
+    
 }
 
 .imagenes_producto img {
@@ -724,6 +728,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 1px solid rgba(128, 128, 128, 0.315);
 }
 
 
@@ -731,7 +736,7 @@ footer {
     height: 80%;
 }
 
-.categoria-2 p{
+.categoria-2 a{
     margin-bottom: 0;
     margin-top: 5px;
     font-size: 20px;

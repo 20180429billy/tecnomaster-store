@@ -115,10 +115,10 @@ class EstadoPedido(models.Model):
         return self.estado_pedido
     
 class Pedido(models.Model):
-    id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
     fecha_pedido = models.DateTimeField(auto_now=True, null=True, blank=True)
-    direccion_pedido = models.CharField(max_length=200)
-    id_estado = models.ForeignKey(EstadoPedido, on_delete=models.CASCADE)
+    direccion_pedido = models.CharField(max_length=200, null=True)
+    id_estado = models.ForeignKey(EstadoPedido, on_delete=models.CASCADE, null=True)
     id_producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
     precio_pedido = models.IntegerField()
@@ -126,18 +126,18 @@ class Pedido(models.Model):
     def __str__(self):
         return self.direccion_pedido
 
-class EstadoValoracion(models.Model):
+class EstadoValoraciones(models.Model):
     estado_valoracion = models.CharField(max_length=100)
 
     def __str__(self):
         return self.estado_valoracion
 
-class Valoracion(models.Model):
-    id_pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, default="")
+class Valoraciones(models.Model):
+    id_producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=True)
     calificacion = models.IntegerField()
     comentario = models.CharField(max_length=250)
     fecha = models.DateTimeField(auto_now=True)
-    id_estado = models.ForeignKey(EstadoValoracion, on_delete=models.CASCADE)
+    id_estado = models.ForeignKey(EstadoValoraciones, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.comentario
