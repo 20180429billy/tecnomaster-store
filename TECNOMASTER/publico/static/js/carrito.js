@@ -6,6 +6,6 @@ console.log(precio.textContent)
 
 cantidad.addEventListener('change', (e)=>{
     const total = e.target.value
-    precio2 = total*precio.textContent
-    total_compra.innerHTML = precio2
+    precio2 = total*precio.value
+    total_compra.value = precio2
 });

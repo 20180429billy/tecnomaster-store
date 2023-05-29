@@ -94,7 +94,9 @@ urlpatterns = [
     path("ultimas_compras_pagina", publico.ultimas_compras_pagina, name="ultimas_compras_pagina"),
     #############################################
     path("add_valoracion/<int:id_producto>", publico.add_valoracion, name="add_valoracion"),
-
+    #############################################
+    path("add_pedido/<int:id_producto>", publico.add_pedido, name="add_pedido"),
+    
    
     
 ]

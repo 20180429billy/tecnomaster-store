@@ -217,131 +217,21 @@
     <main class="contenedor">
         <h3 class="ultimas-compras_titulo">Ultimas compras</h3>
         <div class="ultimas_compras">
+            {% for pedido in pedidos %}
             <div class="compra_historial">
                 <img src="" alt="">
-                <p class="nombre">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_compra-historial">$1500.00</p>
-                <div class="valoracion-producto valoracion-compra">
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div class="comentar-historial">
-                    <span class="material-icons-sharp">
-                        question_answer
-                    </span>
-                    <a>Comentar</a>
-                </div>
-
+                <p class="nombre">{{pedido.fecha_pedido}}</p>
+                <p class="nombre">{{pedido.id_producto}}</p>
+                <p class="nombre">#{{pedido.cantidad}}</p>
+                <p class="precio_compra-historial">${{pedido.precio_pedido}}</p>
             </div>
-            <div class="compra_historial">
-                <img src="" alt="">
-                <p class="nombre">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_compra-historial">$1500.00</p>
-                <div class="valoracion-producto valoracion-compra">
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div class="comentar-historial">
-                    <span class="material-icons-sharp">
-                        question_answer
-                    </span>
-                    <a>Comentar</a>
-                </div>
-
-
-            </div>
-            <div class="compra_historial">
-                <img src="" alt="">
-                <p class="nombre">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_compra-historial">$1500.00</p>
-                <div class="valoracion-producto valoracion-compra">
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div class="comentar-historial">
-                    <span class="material-icons-sharp">
-                        question_answer
-                    </span>
-                    <a>Comentar</a>
-                </div>
-
-
-            </div>
-            <div class="compra_historial">
-                <img src="" alt="">
-                <p class="nombre">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_compra-historial">$1500.00</p>
-                <div class="valoracion-producto valoracion-compra">
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div class="comentar-historial">
-                    <span class="material-icons-sharp">
-                        question_answer
-                    </span>
-                    <a>Comentar</a>
-                </div>
-
-
-            </div>
-            <div class="compra_historial">
-                <img src="" alt="">
-                <p class="nombre">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_compra-historial">$1500.00</p>
-                <div class="valoracion-producto valoracion-compra">
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div class="comentar-historial">
-                    <span class="material-icons-sharp">
-                        question_answer
-                    </span>
-                    <a>Comentar</a>
-                </div>
-
-
-            </div>
-            <div class="compra_historial">
-                <img src="" alt="">
-                <p class="nombre">Laptops HP Pavilion 360 Gaming</p>
-                <p class="precio_compra-historial">$1500.00</p>
-                <div class="valoracion-producto valoracion-compra">
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star checked_rating"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div class="comentar-historial">
-                    <span class="material-icons-sharp">
-                        question_answer
-                    </span>
-                    <a>Comentar</a>
-                </div>
-
-
-            </div>
+            {% endfor %}
         </div>
     </main>
 
 
     <!-- seccion del pie de pagina o footer -->
-    <!-- Footer -->
+    <!-- Footer --> 
     <footer class="text-center text-lg-start bg-white text-muted">
         <!-- Section: Social media -->
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">

@@ -49,7 +49,7 @@
             </form>
         </div>
         <div class="left-buttons">
-
+ 
             <label for="btn-navbar">
                 <div class="carrito">
                     <a  class="navbar-enlace" href="{% url 'carrito_pagina' 1 %}">
@@ -217,21 +217,22 @@
     <main class="contenedor">
         <h3 class="carrito_titulo">Mi carrito</h3>
         <div class="carrito-container">
-            <div class="compra_carrito">
-                <img src="{{ productos.imagen_producto.url }}" alt="">
-                <p class="nombre_producto-carrito">{{productos.nombre_producto}}</p>
-                <p class="precio_producto-carrito precio_producto_carrito">{{productos.precio_producto}}</p>
-                <input type="number" class="cantidad_producto">
-            </div>
-            <div class="total">
-                <p>Total: <span class="total_compra">{{productos.precio_producto}}</span></p>
-                <div class="finalizar-compra">
-                    <span class="material-icons-sharp">
-                        credit_card
-                        </span>
-                    <a>Pagar</a>
+            <form action="{% url 'add_pedido' productos.id%}" method="POST">
+                <div class="compra_carrito">
+                    <input type="number" name="id" readonly value="{{productos.id}}">
+                    <img src="{{ productos.imagen_producto.url }}" alt="">
+                    {% csrf_token %}
+                    <p class="nombre_producto-carrito">{{productos.nombre_producto}}</p>
+                    <input type="number" name="precio-producto" class="precio_producto-carrito precio_producto_carrito" value="{{productos.precio_producto}}" readonly>
+                    <input type="number" class="cantidad_producto" name="cantidad" placeholder="Cantidad">
                 </div>
-            </div>
+                <div class="total">
+                    <p>Total: <input type="number" name="total_compra-precio" value="{{productos.precio_producto}}" readonly class="total_compra"></p>
+                    <div class="finalizar-compra">
+                        <button>Pagar</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </main>
 

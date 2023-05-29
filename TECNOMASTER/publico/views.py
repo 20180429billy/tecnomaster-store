@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from privado.models import *
 from django.core.files.storage import FileSystemStorage
 
-# Create your views here.
+# Create your views here. 
 
 def carrito_pagina(request, id_producto):
     productos = Producto.objects.get(id = id_producto)
@@ -59,6 +59,20 @@ def add_valoracion(request, id_producto):
 
 ####################################################################
 
+def add_pedido(request, id_producto):
+    if request.method == "POST":
+        pedido = Pedido()
+        pedido.id_producto = Producto.objects.get(id = id_producto)
+        pedido.precio_pedido = request.POST["total_compra-precio"]
+        pedido.cantidad = request.POST["cantidad"]
+
+        pedido.save()
+        return redirect("ultimas_compras_pagina")
+    else:
+        return redirect("ultimas_compras_pagina")
+
+####################################################################
+
 def index_pagina(request):
     return render(request, "index_pagina.html")
 
@@ -92,4 +106,7 @@ def sobre_nosotros_pagina(request):
 ####################################################################
 
 def ultimas_compras_pagina(request):
-    return render(request, "ultimas_compras_pagina.html")
+    pedidos = Pedido.objects.all()
+    return render(request, "ultimas_compras_pagina.html",{
+        'pedidos':pedidos
+    })

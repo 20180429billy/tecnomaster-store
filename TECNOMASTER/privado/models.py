@@ -142,7 +142,6 @@ class Valoraciones(models.Model):
     def __str__(self):
         return self.comentario
 
-class 
 
     
     
