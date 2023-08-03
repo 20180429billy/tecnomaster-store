@@ -3,6 +3,15 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
 from django.core.files.storage import FileSystemStorage
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from django.shortcuts import get_object_or_404
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+
 
 # Create your views here.
 #get_object_or_404 
@@ -404,6 +413,54 @@ def delete_cliente(request, cliente_id):
     cliente = Cliente.objects.get(id = cliente_id)
     cliente.delete()
     return redirect("clientes")
+
+def generar_reporte_cliente_pdf(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    
+    # Crear el archivo PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="reporte_cliente_{cliente.id}.pdf"'
+    
+    # Crear el canvas y agregar contenido
+    p = canvas.Canvas(response, pagesize=letter)
+
+    # Agregar un título con estilo
+    p.setFont("Helvetica-Bold", 20)
+    p.drawCentredString(300, 750, f"Reporte de Cliente  : {cliente.nombres} {cliente.apellidos}")
+
+    # Crear una tabla para organizar la información
+    data = [
+        ["Nombres:", cliente.nombres],
+        ["Apellidos:", cliente.apellidos],
+        ["DUI:", cliente.dui],
+        ["Correo:", cliente.correo],
+        ["Teléfono:", cliente.telefono],
+        ["Dirección:", cliente.direccion],
+        ["Estado:", cliente.id_estado.estado_cliente],
+    ]
+
+    # Estilo de la tabla
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.royalblue),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+    ])
+
+    # Crear la tabla
+    width, height = letter
+    table = Table(data, colWidths=[100, 440])
+    table.setStyle(style)
+    table.wrapOn(p, width, height)
+    table.drawOn(p, 50, 600)
+
+
+    p.showPage()
+    p.save()
+    
+    return response
     
         
 
