@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("marcas/", views.marcas, name="marcas"),
     path("add_marcas/", views.add_marcas, name="add_marcas"),
+    path('marcas_chart/', views.marcas_chart, name='marcas_chart'),
     path("edit_marcas/<int:id_marca>", views.edit_marcas, name="edit_marcas"),
     path("delete_marcas/<int:id_marca>", views.delete_marcas, name="delete_marcas"),
     #################################################################
@@ -30,7 +31,7 @@ urlpatterns = [
     path("add_productos/", views.add_productos, name="add_productos"),
     path("edit_productos/<int:id_producto>", views.edit_productos, name="edit_productos"),
     path("delete_productos/<int:id_producto>", views.delete_productos, name="delete_productos"),
-    
+    path('reporte_producto/<int:producto_id>/', views.reporte_producto, name='reporte_producto'),
     #################################################################
     path("usuarios/", views.usuarios, name="usuarios"),
     path("add_usuarios/", views.add_usuarios, name="add_usuarios"), 
@@ -45,6 +46,8 @@ urlpatterns = [
      
     #################################################################
     path("categorias/", views.categorias, name="categorias"),
+    path('reporte-categorias/', views.reporte_categorias, name='reporte_categorias'),
+    path('categorias_chart/', views.categorias_chart, name='categorias_chart'),
     path("add_categorias/", views.add_categorias, name="add_categorias"),
     path("edit_categorias/<int:categoria_id>", views.edit_categorias, name="edit_categorias"),
     path("delete_categorias/<int:categoria_id>", views.delete_categorias, name="delete_categorias"),
@@ -63,6 +66,8 @@ urlpatterns = [
     
     #################################################################
     path("clientes", views.clientes, name="clientes"),
+    path("clientes_chart/", views.clientesCharts, name="clientes_chart"),
+    path('reporte_cliente/<int:cliente_id>/', views.generar_reporte_cliente_pdf, name='reporte_cliente_pdf'),
     path("add_cliente/", views.add_cliente, name="add_cliente"),
     path("edit_cliente/<int:cliente_id>", views.edit_cliente, name="edit_cliente"),
     path("delete_cliente/<int:cliente_id>", views.delete_cliente, name="delete_cliente"),
