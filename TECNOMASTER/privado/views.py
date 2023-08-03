@@ -12,6 +12,8 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
+from django.db.models import Count
+
 
 
 # Create your views here.
@@ -409,6 +411,52 @@ def categorias(request):
     return render(request, "categorias.html", {
         "categorias" : categorias
     })
+
+def reporte_categorias(request):
+    # Obtener la información de las categorías y contar el número de productos
+    categorias = Categoria.objects.annotate(num_productos=Count('producto'))
+
+    # Generar el PDF con la información
+    buffer = io.BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Contenido del PDF
+    elements = [Paragraph("Reporte de Categorías", getSampleStyleSheet()['Heading1']), Spacer(1, 12)]
+
+    # Estilos de tabla y párrafo
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.royalblue),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ])
+
+    # Crear la tabla con los datos de las categorías
+    data = [['ID', 'Nombre de Categoría', 'Descripción', 'Número de Productos']]
+    for categoria in categorias:
+        data.append([categoria.id, categoria.nombre, categoria.descripcion, categoria.num_productos])
+
+    table = Table(data, colWidths=[50, 150, 150, 150])
+    table.setStyle(style)
+
+    elements.append(table)
+
+    # Generar el PDF
+    pdf.build(elements)
+
+    # Obtener el contenido del buffer y cerrarlo
+    pdf_buffer = buffer.getvalue()
+    buffer.close()
+
+    # Escribir el contenido del PDF en la respuesta
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="reporte_categorias.pdf"'
+    response.write(pdf_buffer)
+
+    return response
     
 #============================================================================
 #===============================DASHBOARD====================================
