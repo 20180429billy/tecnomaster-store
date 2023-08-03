@@ -404,7 +404,47 @@ def delete_categorias(request, categoria_id):
     categoria.delete()
     return redirect("categorias")
     
-   
+def marcas_chart(request):
+    marcas = Marcas.objects.all().order_by("id")
+    productos_por_marca = [marca.producto_set.count() for marca in marcas]
+
+    context = {
+        "marcas": marcas,
+        "productos_por_marca": productos_por_marca,
+    }
+
+    return render(request, "marcas_chart.html", context)
+
+def categorias_chart(request):
+    categorias = Categoria.objects.all().order_by("id")
+    productos_por_categoria = [categoria.producto_set.count() for categoria in categorias]
+
+    context = {
+        "categorias": categorias,
+        "productos_por_categoria": productos_por_categoria,
+    }
+
+    return render(request, "categorias_chart.html", context)
+
+def clientesCharts(request):
+    estado = EstadoCliente.objects.all()
+    clientes = Cliente.objects.all().order_by("id")
+
+    # Obtener la cantidad de clientes activos e inactivos
+    clientes_activos = clientes.filter(
+        id_estado__estado_cliente="Activo").count()
+    clientes_inactivos = clientes.filter(
+        id_estado__estado_cliente="Inactivo").count()
+
+    context = {
+        "estados": estado,
+        "clientes": clientes,
+        "clientes_activos": clientes_activos,
+        "clientes_inactivos": clientes_inactivos
+    }
+
+    return render(request, "clientes_chart.html", context)
+
 
 def categorias(request):
     categorias = Categoria.objects.all().order_by("id")
