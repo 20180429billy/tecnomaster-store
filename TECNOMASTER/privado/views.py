@@ -1,3 +1,4 @@
+import io
 import os
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -131,6 +132,67 @@ def delete_productos(request, id_producto):
     producto = Producto.objects.get(id = id_producto)
     producto.delete()
     return redirect("productos")
+
+def reporte_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+
+    # Crear un objeto PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="reporte_producto_{producto_id}.pdf"'
+
+    # Crear el contenido del PDF
+    buffer = io.BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Agregar contenido al PDF
+    data = [
+        ["ID de Categoría:", producto.id_categoria.nombre],
+        ["Nombre del Producto:", producto.nombre_producto],
+        ["Descripción del Producto:", producto.descripcion_producto],
+        ["Precio del Producto:", producto.precio_producto],
+        ["Especificaciones del Producto:", producto.especificaciones_producto],
+        ["Marca del Producto:", producto.id_marca.marca],
+    ]
+
+    # Obtener la imagen del producto
+    try:
+        image_file = producto.imagen_producto.path
+    except Exception as e:
+        # Si ocurre un error al cargar la imagen, simplemente muestra un mensaje
+        image_file = "Imagen no disponible"
+
+    # Agregar la imagen al contenido
+    data.append(["Imagen del producto:", ""])
+    data[-1][-1] = Image(image_file, width=100, height=100)
+
+    # Estilos de tabla y párrafo
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.royalblue),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ])
+    table = Table(data, colWidths=[150, 390])
+    table.setStyle(style)
+
+    # Crear el documento PDF y agregar la tabla
+    elements = [Paragraph(f"Reporte de producto: {producto.nombre_producto}", getSampleStyleSheet()['Heading1'])]
+    elements.append(table)
+
+    # Generar el PDF
+    pdf.build(elements)
+
+    # Obtener el contenido del buffer y cerrarlo
+    pdf_buffer = buffer.getvalue()
+    buffer.close()
+
+    # Escribir el contenido del PDF en la respuesta
+    response.write(pdf_buffer)
+
+    return response
 
 
 
