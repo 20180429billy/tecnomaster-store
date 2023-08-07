@@ -6,7 +6,7 @@ from .models import *
 from django.core.files.storage import FileSystemStorage
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404 
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
@@ -253,6 +253,64 @@ def delete_usuarios(request, id_usuario):
     usuario = Usuario.objects.get(id = id_usuario)
     usuario.delete()
     return redirect("usuarios")
+
+def generar_reporte_usuario_pdf(request):
+    usuarios = Usuario.objects.all()
+
+
+    # Generar el PDF con la información
+    buffer = io.BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Contenido del PDF
+    elements = [Paragraph("Reporte de Usuarios", getSampleStyleSheet()['Heading1']), Spacer(1, 12)]
+
+    # Estilos de tabla y párrafo
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.royalblue),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ])
+
+    # Crear la tabla con los datos de las categorías
+    data = [['ID', 'Nombre', 'Apellido', 'Correo', 'Alias',]]
+    for usuario in usuarios:
+        data.append([usuario.id, usuario.nombre_usuario, usuario.apellido_usuario, usuario.correo_usuario, usuario.alias_usuario])
+
+    table = Table(data, colWidths=[50, 100, 100, 100, 100])
+    table.setStyle(style)
+
+    elements.append(table)
+    
+    # Generar el PDF
+    pdf.build(elements)
+
+    # Obtener el contenido del buffer y cerrarlo
+    pdf_buffer = buffer.getvalue()
+    buffer.close()
+
+    # Escribir el contenido del PDF en la respuesta
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="reporte_usuarios.pdf"'
+    response.write(pdf_buffer)
+
+    return response
+
+
+def estadoUsuario_chart(request):
+    estadoUsuarios = EstadoUsuario.objects.all().order_by("id")
+    usuarios_por_estadoUsuarios = [estadoUsuarios.usuarios_set.count() for estadoUsuario in estadoUsuarios]
+
+    context = {
+        "estadoUsuarios": estadoUsuarios,
+        "usuarios_por_estadoUsuarios": usuarios_por_estadoUsuarios,
+    }
+
+    return render(request, "estadoUsuario_chart.html", context)
 
 #============================================================================
 #===============================VALORACIONES====================================

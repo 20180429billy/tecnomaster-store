@@ -153,6 +153,8 @@ form button span {
     cursor: pointer;
 }
 
+
+
 .nav-categorias div p {
     margin-bottom: 0;
 }
@@ -1049,6 +1051,11 @@ footer {
 
 .sobre_nosotros div h3{
     font-size: 25px;
+}
+
+
+.contendor_grafico{
+    margin: 20px;
 }
 
 

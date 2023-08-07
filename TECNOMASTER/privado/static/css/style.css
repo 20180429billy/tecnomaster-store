@@ -1060,6 +1060,11 @@ table .tr-admin:first-child td {
     overflow-y: scroll;
 }
 
+.contenedor_grafico{
+    margin: 50px;
+    max-width: 1500px;
+}
+
 
 /* .container{
     overflow-y: scroll;

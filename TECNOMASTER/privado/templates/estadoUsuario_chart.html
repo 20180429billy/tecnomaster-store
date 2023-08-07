@@ -1,22 +1,16 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Productos por categoria</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Usuarios por estado usuario</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    
-
-    <div class="contenedor_grafico">
-        <h2>Gráfico de barras: Productos por categoria</h2>
-        <canvas id="chart"></canvas>
-    </div>
+    <h2>Gráfico de barras: Usuarios por estado usuario</h2>
+    <canvas id="chart"></canvas> 
 
     <script>
-    const categorias = [{% for categoria in categorias %}"{{ categoria.nombre }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
-    const productosPorCategoria = [{% for cantidad in productos_por_categoria %}{{ cantidad }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+    const estadoUsuarios = [{% for estadoUsuario in estadoUsuarios %}"{{ estadoUsuario.estado_usuario }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+    const productosPorCategoria = [{% for cantidad in usuarios_por_estadoUsuarios %}{{ cantidad }}{% if not forloop.last %}, {% endif %}{% endfor %}];
 
     const ctx = document.getElementById('chart').getContext('2d');
     const myChart = new Chart(ctx, {
@@ -24,7 +18,7 @@
         data: {
             labels: categorias,
             datasets: [{
-                label: 'Cantidad de productos',
+                label: 'Cantidad de usuarios',
                 data: productosPorCategoria,
                 backgroundColor: 'rgba(54, 162, 235, 0.8)',
                 borderColor: 'rgba(54, 162, 235, 1)',
