@@ -258,6 +258,18 @@
                                                             <i class="fa-solid fa-trash"></i>
                                                         </div>
                                                     </a></td>
+                                                <td><a href="{% url 'reporte_pedido' pedido_id=pedido.id %}" target="_blank">
+                                                    <button>Descargar Reporte Pedido #{{ producto.id }}</button>
+                                                </a></td>
+                                                
+                                                    {% if pedido.id_estado.estado_pedido == "Pagado" %}
+                                                    <td>
+                                                        <a href="{% url 'reporte_pedido_comprobante' pedido.id %}" target="_blank" class="btn btn-primary">Generar comprobante</a>
+                                                    </td>
+                                                    {% endif %}
+
+                                                
+                                                <td></td>
                                             </tr>
                                             <!-- MODAL editar  -->
                                             <div class="modal fade" id="editModal{{pedido.id}}" tabindex="-1"
