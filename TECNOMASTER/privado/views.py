@@ -669,6 +669,184 @@ def generar_reporte_cliente_pdf(request, cliente_id):
     p.save()
     
     return response
+
+
+
+"""reportes de solano"""
+
+def reporte_pedido_pagado(request, pedido_id):
+    # Obtener el pedido con el estado "Pagado" o devolver un error 404 si no existe
+    pedido = get_object_or_404(Pedido, id=pedido_id, id_estado__estado_pedido='Pagado')
+
+    # Crear un objeto PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="reporte_pedido_{pedido_id}.pdf"'
+
+    # Crear el contenido del PDF
+    buffer = io.BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Agregar contenido al PDF
+    data = [
+        ["ID del Pedido:", pedido.id],
+        ["ID del Cliente:", f"{pedido.id_cliente.nombres} {pedido.id_cliente.apellidos}"],
+        ["Fecha del Pedido:", pedido.fecha_pedido.strftime("%d de %B del %Y")],
+        ["Dirección del Pedido:", pedido.direccion_pedido],
+        ["Estado del Pedido:", pedido.id_estado.estado_pedido],
+        ["Cantidad:", pedido.cantidad],
+        ["Precio del Pedido:", pedido.precio_pedido],
+        ["Nombre del producto:", pedido.id_producto.nombre_producto],
+    ]
+
+    # Obtener la URL de la imagen del producto
+    try:
+        image_url = pedido.id_producto.imagen_producto.path
+    except Exception as e:
+        # Si ocurre un error al obtener la URL de la imagen, simplemente muestra un mensaje
+        image_url = ""
+
+    # Agregar la imagen al contenido
+    data.append(["Imagen del producto:", ""])
+    if image_url:
+        data[-1][-1] = Image(image_url, width=100, height=100)
+
+    # Estilos de tabla y párrafo
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.royalblue),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ])
+    table = Table(data, colWidths=[150, 390])
+    table.setStyle(style)
+
+    # Crear el documento PDF y agregar la tabla
+    elements = [Paragraph(f"Factura del Pedido #{pedido.id}", getSampleStyleSheet()['Heading1'])]
+    elements.append(table)
+
+    # Generar el PDF
+    pdf.build(elements)
+
+    # Obtener el contenido del buffer y cerrarlo
+    pdf_buffer = buffer.getvalue()
+    buffer.close()
+
+    # Escribir el contenido del PDF en la respuesta
+    response.write(pdf_buffer)
+
+    return response
+
+
+# ============================================================================
+# ===============================REPORTES DE VALORACIONES====================================
+
+def reporte_valoraciones(request):
+    # Obtener la información de las valoraciones
+    valoraciones = Valoraciones.objects.all()
+
+    # Generar el PDF con la información
+    buffer = io.BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Contenido del PDF
+    elements = [Paragraph("Reporte de Valoraciones", getSampleStyleSheet()['Heading1']), Spacer(1, 12)]
+
+    # Estilos de tabla y párrafo
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.royalblue),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ])
+
+    # Crear la tabla con los datos de las valoraciones
+    data = [[' Producto', 'Calificación', 'Comentario', 'Fecha', 'Estado Valoración']]
+    for valoracion in valoraciones:
+        data.append([valoracion.id_producto.nombre_producto, valoracion.calificacion, valoracion.comentario,
+                      valoracion.fecha.strftime("%d de %B de %Y"), valoracion.id_estado])
+
+    table = Table(data, colWidths=[120, 120, 120, 120, 120])
+    table.setStyle(style)
+
+    elements.append(table)
+
+    # Generar el PDF
+    pdf.build(elements)
+
+    # Obtener el contenido del buffer y cerrarlo
+    pdf_buffer = buffer.getvalue()
+    buffer.close()
+
+    # Escribir el contenido del PDF en la respuesta
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="reporte_valoraciones.pdf"'
+    response.write(pdf_buffer)
+
+    return response
+    
+
+def reporte_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, id=pedido_id)
+
+    # Crear un objeto PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="reporte_pedido_{pedido_id}.pdf"'
+
+    # Crear el contenido del PDF
+    buffer = io.BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Agregar contenido al PDF
+    data = [
+        ["ID del Pedido:", pedido.id],
+        ["Nombre del Cliente:", f"{pedido.id_cliente.nombres} {pedido.id_cliente.apellidos}"],
+        ["Fecha del Pedido:", pedido.fecha_pedido.strftime("%d de %B de %Y")],        
+        ["Dirección del Pedido:", pedido.direccion_pedido],
+        ["Dirección del Pedido:", pedido.direccion_pedido],
+        ["Estado del Pedido:", pedido.id_estado.estado_pedido],
+        ["ID del Producto:", pedido.id_producto.nombre_producto],
+        ["Cantidad:", pedido.cantidad],
+        ["Precio del Pedido:", pedido.precio_pedido],
+    ]
+
+    # Estilos de tabla y párrafo
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.royalblue),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ])
+    table = Table(data, colWidths=[150, 390])
+    table.setStyle(style)
+
+    # Crear el documento PDF y agregar la tabla
+    elements = [Paragraph(f"Reporte del Pedido #{pedido.id}", getSampleStyleSheet()['Heading1'])]
+    elements.append(table)
+
+    # Generar el PDF
+    pdf.build(elements)
+
+    # Obtener el contenido del buffer y cerrarlo
+    pdf_buffer = buffer.getvalue()
+    buffer.close()
+
+    # Escribir el contenido del PDF en la respuesta
+    response.write(pdf_buffer)
+
+    return response
+
+        
+
+
     
         
 
