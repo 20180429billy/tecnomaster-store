@@ -24,7 +24,6 @@ urlpatterns = [
     path("marcas/", views.marcas, name="marcas"),
     path("add_marcas/", views.add_marcas, name="add_marcas"),
     path('marcas_chart/', views.marcas_chart, name='marcas_chart'),
-    path('estadoUsuario_chart/', views.estadoUsuario_chart, name='estadoUsuario_chart'),
     path("edit_marcas/<int:id_marca>", views.edit_marcas, name="edit_marcas"),
     path("delete_marcas/<int:id_marca>", views.delete_marcas, name="delete_marcas"),
     #################################################################
@@ -35,7 +34,6 @@ urlpatterns = [
     path('reporte_producto/<int:producto_id>/', views.reporte_producto, name='reporte_producto'),
     #################################################################
     path("usuarios/", views.usuarios, name="usuarios"),
-    path('reporte-usuarios/', views.generar_reporte_usuario_pdf, name='reporte_usuarios'),
     path("add_usuarios/", views.add_usuarios, name="add_usuarios"), 
     path("edit_usuarios/<int:id_usuario>", views.edit_usuarios, name="edit_usuarios"),
     path("delete_usuarios/<int:id_usuario>", views.delete_usuarios, name="delete_usuarios"),   
@@ -58,6 +56,11 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     
     #################################################################
+    path('reporte-valoraciones/', views.reporte_valoraciones, name='reporte_valoraciones'),
+    path('reporte_pedido/<int:pedido_id>/', views.reporte_pedido, name='reporte_pedido'),
+    path('reporte_pedido_comprobante/<int:pedido_id>/', views.reporte_pedido_pagado, name='reporte_pedido_comprobante'),
+     #################################################################
+
     path("pedidos/", views.pedidos, name="pedidos"),
     path("add_pedidos/", views.add_pedidos, name="add_pedidos"),
     path("edit_pedidos/<int:pedido_id>", views.edit_pedidos, name="edit_pedidos"),
