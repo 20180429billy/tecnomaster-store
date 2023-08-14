@@ -1,11 +1,19 @@
+{% load static %}
+
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Clientes</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 <body>
-    <canvas id="clientesChart"></canvas>
+    <div class="contenedor_grafico2">
+        <h2>Grafico de clientes por estado</h2>
+        <canvas id="clientesChart"></canvas>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

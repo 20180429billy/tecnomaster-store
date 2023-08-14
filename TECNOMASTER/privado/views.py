@@ -480,7 +480,9 @@ def reporte_categorias(request):
         data.append([categoria.id, categoria.nombre, categoria.descripcion, categoria.num_productos])
 
     table = Table(data, colWidths=[50, 150, 150, 150])
+    
     table.setStyle(style)
+    
 
     elements.append(table)
 

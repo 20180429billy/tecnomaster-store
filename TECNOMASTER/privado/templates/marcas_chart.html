@@ -1,12 +1,20 @@
+{% load static %}
+
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Productos por marca</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 <body>
-    <h2>Gráfico de barras: Productos por Marca</h2>
-<canvas id="chart"></canvas>
+    <div class="contenedor_grafico">
+        <h2>Gráfico de barras: Marcas</h2>
+        <canvas id="chart"></canvas>
+        div.class_chart-container        
+    </div>
 
     <script>
     const marcas = [{% for marca in marcas %}"{{ marca.marca }}"{% if not forloop.last %}, {% endif %}{% endfor %}];

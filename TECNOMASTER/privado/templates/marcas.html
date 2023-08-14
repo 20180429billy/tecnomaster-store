@@ -126,6 +126,9 @@
                                 Agregar marca
                                 <i class="fa-solid fa-plus"></i>
                             </button>
+                            <button type="button" class="btn btn-primary" >
+                                <a href="{% url 'marcas_chart' %}" class="" style="background-color: transparent; color: white;">Ver grafico</a>
+                            </button>
                             <!-- MODAL  -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                                 aria-hidden="true">
@@ -136,6 +139,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
+
                                         <div class="modal-body">
                                             <!-- modal -->
                                             <form action="{% url 'add_marcas' %}" method="POST" enctype="multipart/form-data">

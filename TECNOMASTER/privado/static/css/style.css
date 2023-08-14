@@ -1065,6 +1065,12 @@ table .tr-admin:first-child td {
     max-width: 1500px;
 }
 
+.contenedor_grafico2{
+    margin: 50px;
+    max-width: 800px;
+    text-align: centere;
+}
+
 
 /* .container{
     overflow-y: scroll;
